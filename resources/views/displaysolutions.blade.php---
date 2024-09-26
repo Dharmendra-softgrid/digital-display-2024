@@ -1,0 +1,1117 @@
+@extends('layouts.app')
+@section('content')
+    @if ($displaysolutions->design == 'standard')
+        <main class="main_content">
+            <section class="top-inner-banner">
+                <div class="top_banner_slider">
+
+                    @if ($sliders->isNotEmpty())
+                        @foreach ($sliders as $i => $slider)
+                            <div class="banner_slide">
+                                <div class="banner_slide_img">
+                                    <figure>
+                                        <img src="{{ asset(isset($slider->image) ? 'images/' . $slider->image : 'images/computerbanner.jpg') }}"
+                                            alt="banner">
+                                    </figure>
+                                </div>
+                                <div class="banner_slide_caption">
+                                    @if (!empty($slider->slide_title))
+                                        <div class="container relative">
+                                            <div class="top-banner-content">
+                                                <h3>{{ $slider->slide_title }}</h3>
+                                                <p>{!! $slider->slide_content !!}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                    <!-- slid end -->
+                </div>
+            </section>
+            <section class="solution_sec sec_padd">
+                <div class="sec_padd">
+                    <div class="head_cmn text-center">
+                        <h2 class="head_2">{{ $displaysolutions->short_description }}</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mx-auto">
+                            <div class="sec_p text-center">
+                                <p>{{ strip_tags(html_entity_decode($displaysolutions->content)) }}</p>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            <section class="gray-bg sec_padd digital_sec">
+                <div class="container">
+                    <div class="head_cmn text-center">
+                        <h2 class="head_2">DIGITAL MENUS THAT SELL</h2>
+                    </div>
+                    <div class="row g-4">
+                        @if (isset($solutionDetail) && $solutionDetail->isNotEmpty())
+                            @foreach ($solutionDetail as $s)
+                                <div class="col-md-4">
+                                    <div class="digital_block_sec">
+                                        <div class="img-wrap">
+                                            <figure>
+                                                <img src="{{ asset('images/' . $s->image) }}" alt="news img">
+                                            </figure>
+                                        </div>
+                                        <div class="digital_block_content">
+                                            <h3>{{ $s->heading }}</h3>
+                                            <p>{!! $s->content !!}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+
+                </div>
+            </section>
+            <section class="solution_sec sec_padd pt-5 ">
+                <div class="container">
+                    <div class="head_cmn text-center">
+                        <h2 class="head_2">{{ $displaysolutions->banner_title }}</h2>
+                        <p>{!! $displaysolutions->banner_short_description !!}</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mx-auto">
+                            <div class="standard_display_banner">
+                                <figure>
+                                    <img src="{{ asset('images/' . $displaysolutions->bannerimage) }}" alt="news img">
+                                </figure>
+
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            @if (
+                $slug == 'signedge-enterprise' ||
+                    $slug == 'signedge-basic' ||
+                    $slug == 'digital-signage' ||
+                    $slug == 'signedge-display-network-ad-platform')
+                <section class="display_banner_conetnt_sec ">
+                    <div class="d-slider-sec sec-1">
+                        <div class="container">
+                            <div class="digital_slider_banner">
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Retail-Banner_01.jpg') }}" alt="Signage IMG">
+                                </div>
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Retail-Banner_02.png') }}" />
+                                </div>
+                            </div>
+                            <div class="display_banner_conetnt mt-4">
+                                <div class="head_cmn text-center">
+                                    <h3 class="head_3">Why Panasonic SignEdge for Retail?</h3>
+                                    <p>Panasonic SignEdge is a Web Based (On-premises & Cloud Platform) digital signage
+                                        system that lets you take control of your digital screens, creatives, interactive
+                                        content and kiosks anytime and from anywhere. Panasonic SignEdge is scalable and you
+                                        can scale the no. of displays anytime without any hassle. All your content stores in
+                                        cloud environment in encrypted form, from where you can manage and publish your
+                                        content. The SignEdge platform allow you to automate the content delivery. Bring in
+                                        the social media experience in your store by displaying Facebook, Twitter and
+                                        customer endorsements.</p>
+                                    <p>Introduce innovative and interactive marketing campaigns like End of Season Sale,
+                                        digital coupons etc.</p>
+                                </div>
+                                {{-- <h4 class="mb-3">Benefits of SignEdge in Retail-</h4>
+            <ul>
+              <li>
+                <h5>Brand Awareness</h5>
+                <p>Create awareness for products by showing appealing promotion videos to the customers. Keep up-to-date with trends by informing them to follow the brand on social media.</p>
+              </li>
+              <li>
+                <h5>Effective communication</h5>
+                <p>Communicate to your customers with effective Call to actions. Educate them with rich media contents. Encourage them to share live images by posting them on social media.</p>
+              </li>
+                <li>
+                <h5>Create Loyal Customers</h5>
+                <p>Turn store visitors into Loyal customers by creating an awesome in-store shopping experience. Show customized content and make them engaged.</p>
+              </li>
+                <li>
+                <h5>Influence Customers / Buyer’s Purchase Decision</h5>
+                <p>Make an impact on your customer’s last-minute purchase decision by showing relevant offers and discounts. Increase credibility and trust among the visitors.</p>
+              </li>
+                <li>
+                <h5>Close more sales</h5>
+                <p>Run multiple promotions to encourage your customers to purchase more. Target customers with contextual advertising, whether it’s an annual sale or special offer season.</p>
+              </li> 
+            </ul> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============== -->
+                    <div class="d-slider-sec sec-2">
+                        <div class="container">
+                            <div class="digital_slider_banner">
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Restaurant_01.png') }}" />
+                                </div>
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Restaurant_02.png') }}" />
+                                </div>
+                            </div>
+                            <div class="display_banner_conetnt mt-4">
+                                <div class="head_cmn text-center">
+                                    <h3 class="head_3">Why Panasonic SignEdge for Hospitality?</h3>
+                                    <p>Panasonic SignEdge is web based restaurant menu software that allows you to control
+                                        your restaurant digital signage whenever and from wherever you need. The digital
+                                        menu board software has integrated design tools that allow you to quickly create,
+                                        edit and update attractive contents for your restaurant and fast food digital menu
+                                        boards. The content scheduling feature of the restaurant menu software saves you
+                                        from the hassle of manually refreshing your digital menu board contents for every
+                                        meal hour, festive season, happy hour, special occasion, etc. The software also
+                                        allows you to manage and publish your contents in real-time. Panasonic SignEdge
+                                        offers innovative and interactive marketing campaigns that will help you attract
+                                        visitors.</p>
+
+                                </div>
+                                {{-- <h4 class="mb-3">Benefits of SignEdge-</h4>
+          <ul>
+            <li>
+              <h5>Cost-Effective Menu Board Creation:</h5>
+              <p>With a digital restaurant menu, you can simply cut the cost and design your own digital menu boards. You can change it according to your preference at any time.</p>
+            </li>
+            <li>
+              <h5>Multiple Marketing Campaigns: </h5>
+              <p>Digital signage for restaurants can run different types of marketing campaigns effortlessly. You can display your marketing messages, enlist your discount offers and highlight the best deals of the day.</p>
+            </li>
+              <li>
+              <h5>Upsell Your Business:</h5>
+              <p>menu boards fast food restaurants, when integrated with the POS, can help in upselling your restaurant business. This will not only drive more visitors but also increase the sales graph.</p>
+            </li>
+              <li>
+              <h5>Reduce the Wait Time:</h5>
+              <p>You would agree to the fact that waiting time to receive the order can be boring. You can make the waiting time entertaining by including interesting facts about their particular order.</p>
+            </li>
+              <li>
+              <h5>Better Order Management: </h5>
+              <p>Digital restaurant menus get an upper hand over printed menu cards, as the former can be made more dynamic with appetizing images and videos of the food.</p>
+            </li> 
+          </ul> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-slider-sec sec-3">
+                        <div class="container">
+                            <div class="digital_slider_banner">
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Education-banner_01.jpg') }}" />
+                                </div>
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Education-banner_02.jpg') }}" />
+                                </div>
+                            </div>
+                            <div class="display_banner_conetnt mt-4">
+                                <div class="head_cmn text-center">
+                                    <h3 class="head_3">Why Panasonic SignEdge for Education?</h3>
+                                    <p>Panasonic SignEdge is cloud-based digital signage software that allows you to control
+                                        your Notice board digitally whenever and from wherever you need. Control messaging
+                                        centrally while allowing individuals, departments and organizations to easily
+                                        contribute from their own devices gives students and faculty the ability to easily
+                                        create school-branded messaging using ready-made templates. Make sure your student
+                                        body is informed and up-to-date by instantly refreshing schedule changes, public
+                                        transportation news, special activities, alerts and results on digital signage for
+                                        schools. Even entertain your audience with live news feeds, weather reports and
+                                        sports updates.</p>
+
+                                </div>
+                                {{-- <h4 class="mb-3">Benefits of SignEdge-</h4>
+          <ul>
+            <li>
+              <h5>Campus wide Announcements</h5>
+              <p>Reach all staffs and students inside the campus through digital signage displays system. It can be utilized for daily announcements, news, sports updates.</p>
+            </li>
+            <li>
+              <h5>Digital Information Boards</h5>
+              <p>Digital signage can work as digital notice board within educational institutes. This can be used very innovatively for showcasing student’s creative work, in-house innovation.</p>
+            </li>
+              <li>
+              <h5>Show Upcoming Events</h5>
+              <p>Make everyone aware about the upcoming events like workshops, sports event, annual day function, Job fair, book fair, exhibition, fests, festival celebration etc.</p>
+            </li>
+              <li>
+              <h5>Digital Menu Boards</h5>
+              <p>Provide food menu options and daily food specials on the cafeteria, dining halls, canteens etc. Show health benefits and nutritional information for better and healthy lifestyle.</p>
+            </li>
+              <li>
+              <h5>Emergency Messaging System</h5>
+              <p>Create safe and secure environment by alerting everyone on campus about natural disasters, extreme weather conditions, institution opening and closing dates.</p>
+            </li> 
+            <li>
+              <h5>Publish Achievements</h5>
+              <p>Tell stories educate the visitors about achievements, awards and historical information of the institution. Enables motivation by publishing academic achievements of the institution, students and staffs.</p>
+            </li> 
+          </ul> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ========== -->
+                    <div class="d-slider-sec sec-4">
+                        <div class="container">
+                            <div class="digital_slider_banner">
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Healthcare-banner_02.jpg') }}" />
+                                </div>
+                            </div>
+                            <div class="display_banner_conetnt mt-4">
+                                <div class="head_cmn text-center">
+                                    <h3 class="head_3">Why Panasonic SignEdge for Healthcare?</h3>
+                                    <p>Introducing technology including hospital digital signage solutions, tablets and
+                                        touch screen kiosks can reduce operational costs while at the same time improving
+                                        efficiency, quality of care and patient experience. SignEdge’s platform is intuitive
+                                        to operate and update while digital displays ensure accurate information is being
+                                        conveyed to patients and employees at all times reinforcing patient confidence in
+                                        their healthcare choice. Employees can then focus on other tasks when patients
+                                        receive information from hospital digital signage, self-service and wayfinding
+                                        kiosks.</p>
+                                </div>
+                                {{-- <h4 class="mb-3">Benefits of SignEdge-</h4>
+          <ul>
+            <li>
+              <h5>Branding & Promotions</h5>
+              <p>Promote medical services, facilities, specialty, faculty, membership plans across all healthcare units. Advertise upcoming events, newly introduced procedures, offers to create awareness.</p>
+            </li>
+            <li>
+              <h5>Digital Information Boards</h5>
+              <p>Share important information and procedures regarding patient registration, financial assistance, privacy of patient's medical records, medical camps, health checkup drives.</p>
+            </li>
+              <li>
+              <h5>Employee Internal Communication</h5>
+              <p>Share important information such as staff scheduling, doctor availability, meetings, conferences, events etc. Alert and coordinate members during critical emergency situations.</p>
+            </li>
+              <li>
+              <h5>Enhance patient experience</h5>
+              <p>Digital signage also contributes towards the ambience of the infrastructure.  Pleasant visuals can have a very soothing effect on the visitors and patients.</p>
+            </li>
+              <li>
+              <h5>Provide Health & Wellness Tips</h5>
+              <p>Create awareness among patients and visitors by educating them about the serious health issues, preventive measures, critical medical conditions and treatments. Share educational content such as wellness tips and medical advice to keep your patients healthier.</p>
+            </li> 
+          
+          </ul> --}}
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ===== sec 5======= -->
+                    <div class="d-slider-sec sec-5">
+                        <div class="container">
+                            <div class="digital_slider_banner">
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/DOOH-banner_01.jpg') }}" />
+                                </div>
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/DOOH-banner_02.jpg') }}" />
+                                </div>
+                            </div>
+                            <div class="display_banner_conetnt mt-4">
+                                <div class="head_cmn text-center">
+                                    <h3 class="head_3">Why Panasonic SignEdge for DOOH?</h3>
+                                    <p>The Panasonic SignEdge platform guarantees reliable, timely delivery of curated
+                                        content to outdoor digital signage to enhance outdoor advertising for any project.
+                                        Digital out of home (DOOH) signage and content acceleration deliver dynamically
+                                        changing rich-media content to any outdoor screen based on environmental triggers in
+                                        real time. Businesses can heighten the way audiences engage with their brand by
+                                        implementing a SignEdgeble, smart solution prompted to adapt based on environmental
+                                        factors. With SignEdge, you can easily display engaging high-definition information,
+                                        products, brand messages and more.</p>
+
+                                </div>
+                                {{-- <h4 class="mb-3">Benefits of DOOH Digital Signage</h4>
+          <ul>
+            <li>
+              <h5>Public Information Updates</h5>
+              <p>Inform the public about the news, weather and promote upcoming events, conferences, sports, meetups instantly.</p>
+            </li>
+            <li>
+              <h5>Large-Scale Entertainment</h5>
+              <p>Engage people and fans while they are in the stadium, concert, amusement park, cinema theatre etc. Show right message at the right place at the right time to the target audience.</p>
+            </li>
+              <li>
+              <h5>Storefront Promotion</h5>
+              <p>Capture the attention of the people who are near the store with attractive visual ads. Drive more foot traffic to the retail store with special sales and promotions.</p>
+            </li>
+              <li>
+              <h5>Better Audience Targeting</h5>
+              <p>Run targeted hyperlocal advertisements campaigns at the specific places to drive more revenue. Promote brands, advertise products and services with contextual content.</p>
+            </li>
+              <li>
+              <h5>Real-Time Information</h5>
+              <p>Keep travellers / commuters / passengers well informed with arrival, departure and schedule changes instantly in real time along with advertisement content.</p>
+            </li> 
+            <li>
+              <h5>Maximize Visibility</h5>
+              <p>Boost the visibility to more viewers by having the digital signage on strategic locations. Promote outstanding visuals to attract more viewers.</p>
+            </li>
+          
+          </ul> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ==========start 6===== -->
+                    <div class="d-slider-sec sec-6">
+                        <div class="container">
+                            <div class="digital_slider_banner">
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Corporate-banner_01.jpg') }}" />
+                                </div>
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Corporate-banner_02.jpg') }}" />
+                                </div>
+                            </div>
+                            <div class="display_banner_conetnt mt-4">
+                                <div class="head_cmn text-center">
+                                    <h3 class="head_3">Why Panasonic SignEdge for Banking & Finance?</h3>
+                                    <p>SignEdge has the tools and expertise to help retail banking locations reinvent their
+                                        brand communications by seamlessly delivering these in-branch experiences and
+                                        reinforcing the institution as a trusted financial advisor. Our digital engagement
+                                        technology for finance has been proven to enhance the customer experience, driving
+                                        brand relevance and product awareness, while changing behaviour and delivering ROI.
+                                        We provide the platform for retail bankers to easily create and centrally manage
+                                        deployment of these digital experiences, while retaining the flexibility to rapidly
+                                        adapt to local business conditions and audience preferences in real-time.</p>
+
+                                </div>
+                                {{-- <h4 class="mb-3">Benefits of SignEdge-</h4>
+          <ul>
+            <li>
+              <h5>Promotions Products & Services</h5>
+              <p>Increase product and service sales by upselling and cross selling financial products/services such as Insurance, loans and other featured products and valued added services.</p>
+            </li>
+            <li>
+              <h5>Publish Advertisement Campaigns</h5>
+              <p>Create awareness about new products and schemes to influence captive audience by showing eye catching visual advertisements.</p>
+            </li>
+              <li>
+              <h5>Update Information In Real Time</h5>
+              <p>Keep the employees and customers updated by displaying real-time information such as bank interest rates, currency exchange rates, gold price, stock and share market information.</p>
+            </li>
+              <li>
+              <h5>Show Mandatory Informations</h5>
+              <p>Keep everyone updated by publishing mandatory governments notifications on the digital signage displays. Save time by publishing required KYC documents.</p>
+            </li>
+              <li>
+              <h5>Consistent Communications</h5>
+              <p>Strategically deploy digital signage screens to increase engagement of employees by reinforcing company values, showcasing top performers, announcing events etc.</p>
+            </li> 
+            <li>
+              <h5>Educate Employees</h5>
+              <p>Constantly educate employees and make sure they stick with the company work guidelines, security procedures and other critical information</p>
+            </li>
+          
+          </ul> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ==========start 7===== -->
+                    <div class="d-slider-sec sec-7">
+
+                        <div class="container">
+
+                            <div class="digital_slider_banner">
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Bank-and-finance-banner_01.jpg') }}" />
+                                </div>
+                                <div class="digital_slide">
+                                    <img src="{{ asset('images/signage_banner/Bank-and-finance-banner_01.jpg') }}" />
+                                </div>
+                            </div>
+
+                            <div class="display_banner_conetnt mt-4">
+                                <div class="head_cmn text-center">
+                                    <h3 class="head_3">Why Panasonic SignEdge for Corporate Communication?</h3>
+                                    <p>Panasonic SignEdge is Web based (On-premises & Cloud Platform) digital signage System
+                                        that lets you take control of your digital screens, creatives, and kiosks anytime
+                                        and anywhere. All your content will be safely stored in a cloud environment from
+                                        where you can manage and publish your content. Display helpful information using
+                                        digital signage — including announcements, events and updates. Promote employee
+                                        communication across departments and teams</p>
+
+                                </div>
+                                {{-- <h4 class="mb-3">Benefits of SignEdge in Corporate Communication –</h4>
+                          <ul>
+                            <li>
+                              <h5>Single Platform for Internal Communications</h5>
+                              <p>Manage publishing your visual content, whether it’s in the lobby, meeting room, hallway, conference room, reception or cafeteria with corporate digital signage.</p>
+                            </li>
+                            <li>
+                              <h5>Corporate Announcements & collaboration</h5>
+                              <p>Panasonic SignEgde can be a great medium to inform employees about events, workshops, new product launch, leadership goals, revenue & sales outcome, new customer acquisition.</p>
+                            </li>
+                             <li>
+                              <h5>Employee Motivation</h5>
+                              <p>Boost morale of employees by wishing birthday, rewards, recognitions, contributions and other achievements. It is a best way to introduce a new joinee.</p>
+                            </li>
+                             <li>
+                              <h5>Internal Branding</h5>
+                              <p>Showcase the activities performed under corporate social responsibility by your organization. Display messages reinforcing the company's values, ethics & morale. Create awareness among employees about welfare schemes.</p>
+                            </li>
+                             <li>
+                              <h5>Social Media Engagement</h5>
+                              <p>Displaying social media contents on the digital screens across the premises keeps employees well informed on the latest updates and helps in consistent messaging within employees and external world.</p>
+                            </li> 
+                            
+                          
+                          </ul> --}}
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                </section>
+            @endif
+
+            @if ($slug == 'que-management-system')
+                <section class="sec_padd queue-managementsec">
+                    <div class="container">
+                        <div class=" digital_video_sec">
+                            <iframe width="560" height="315"
+                                src="https://www.youtube.com/embed/E4fbpdo_Nm4?si=0qjrDBEOXK5GLQZw"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+
+                    <div class="container mt-4">
+                        <div class="managementsec_bannner">
+                            <img src="{{ asset('images/signage_banner/digital-banner-1.png') }}" />
+                        </div>
+                        <div class="managementsec_bannner">
+                            <img src="{{ asset('images/signage_banner/digital-banner-2.jpg') }}" />
+                        </div>
+                        <div class="managementsec_bannner">
+                            <img src="{{ asset('images/signage_banner/digital-banner-3.jpg') }}" />
+                        </div>
+                        <div class="managementsec_bannner">
+                            <img src="{{ asset('images/signage_banner/digital-banner-4.png') }}" />
+                        </div>
+                        <div class="managementsec_bannner">
+                            <img src="{{ asset('images/signage_banner/digital-banner-5.png') }}" />
+                        </div>
+                        <div class="managementsec_bannner">
+                            <img src="{{ asset('images/signage_banner/digital-banner-6.jpg') }}" />
+                        </div>
+                        <div class="managementsec_bannner">
+                            <img src="{{ asset('images/signage_banner/digital-banner-7.jpg') }}" />
+                        </div>
+
+                    </div>
+
+
+
+                </section>
+            @endif
+
+            <section class="case_studies sec_padd gray-bg Success_stories">
+                <div class="container">
+                    <div class="head_cmn text-center">
+                        <h2 class="head_2">END-TO-END DISPLAY SOLUTIONS</h2>
+                    </div>
+
+                    <div class="case_studies_slider">
+                        @if ($homeDisplaySolution->isNotEmpty())
+                            @foreach ($homeDisplaySolution as $i => $vl)
+                                <div class="product_slide">
+                                    <div class="product_item ">
+                                        <figure>
+                                            <img src="{{ asset(isset($vl->image) ? 'images/' . $vl->image : 'images/computerbanner.jpg') }}"
+                                                alt="blog img">
+                                        </figure>
+                                        <div class="item_body">
+                                            <div class="content">
+                                                <h3>{{ $vl->title }}</h3>
+                                                <div>{!! $vl->short_desc_home !!}</div>
+                                            </div>
+                                            <div class="know_more-link text-start btn-effect">
+                                                @if ($i == 7)
+                                                    <a href="https://pro-av.panasonic.net/en/" class="link">
+                                                        Know More
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('displaysolutions', ['slug' => $vl->slug]) }}"
+                                                        class="link">
+                                                        Know More
+                                                        <!-- <span class="arrow-right"><img src="{{ asset('/') }}images/Icon-arrow-right.svg"></span> -->
+                                                    </a>
+                                                @endif
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </section>
+
+            <section class="sec_padd inquire-now-section gray-bg">
+                <div class="container">
+                    <div class="head_cmn text-center mb-5 ">
+                        <h2 class="head_2 mb-3">INQUIRE NOW</h2>
+                    </div>
+                    <div class="inquire-now-form">
+                        <form id="contact_form" name="contact_form" method="post">
+                            <div class="mb-5 row">
+                                <div class="col">
+                                    <input type="text" required maxlength="50" class="form-control" id="first_name"
+                                        name="type" placeholder="Type">
+                                </div>
+
+                                <div class="col">
+                                    <select class="form-select form-select-lg">
+                                        <option>Product / Category of Interest*</option>
+                                        <option>Category 1</option>
+                                        <option>Category 2</option>
+                                        <option>Category 3</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="col">
+                                    <input type="text" class="form-control" id="last_name" name="city"
+                                        placeholder="City*">
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center"><button type="submit"
+                                    class="btn inquire-now-link round-0">SUBMIT NOW</button></div>
+
+
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+            </section>
+        </main>
+    @elseif($displaysolutions->design == 'alternate')
+        <main class="main_content">
+            <section class="top-inner-banner">
+                <div class="top_banner_slider">
+                    @if ($sliders->isNotEmpty())
+                        @foreach ($sliders as $i => $slider)
+                            <div class="banner_slide">
+                                <div class="banner_slide_img">
+                                    <figure>
+                                        <img src="{{ asset(isset($slider->image) ? 'images/' . $slider->image : 'images/computerbanner.jpg') }}"
+                                            alt="banner">
+                                    </figure>
+                                </div>
+                                <div class="banner_slide_caption">
+                                    @if (!empty($slider->slide_title))
+                                        <div class="container relative">
+                                            <div class="top-banner-content">
+                                                <h3>{{ $slider->slide_title }}</h3>
+                                                <p>{!! $slider->slide_content !!}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                    <!-- slid end -->
+                </div>
+            </section>
+            <section class="breadcrumb-sec">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Home</li>
+                            <li class="breadcrumb-item">Display Solution</li>
+                            <li class="breadcrumb-item">{{ $parentBredcrumName->title }}</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ $displaysolutions->title }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </section>
+            <section class="top-filter-sec">
+                <div class="container">
+                    <div class="filter-cst">
+                        <div class="filter-left">
+                            <div class="filter-icon">
+                                <div class="icon"><span></span><span></span><span></span><span></span></div> Filter
+                            </div>
+                            <div class="product-found">10 products found</div>
+                        </div>
+                        <div class="category_select">
+                            <select name="boxes" class="boxselect">
+                                <option value="all">Newest</option>
+                                <option value="iPRO1">iPRO1</option>
+                                <option value="iPRO2">iPRO2</option>
+                                <option value="iPRO3">iPRO3</option>
+                                <option value="iPRO4">iPRO4</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <section class="Products_listing_sec sec_padd">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="product_sidebar">
+                                <div class="filter">
+                                    <!-- <h5>Filter By</h5> -->
+
+                                    <div class="box border-bottom">
+                                        <div class="box-label">
+                                            Type
+                                            <button class="btn ml-auto" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#inner-box" aria-expanded="false"
+                                                aria-controls="inner-box" id="out" onclick="outerFilter()">
+                                                <span class="fas fa-minus"></span>
+                                                <span class="fas fa-plus"></span>
+                                            </button>
+                                        </div>
+                                        <div id="inner-box" class="mt-2 mr-1 collapse" style="">
+                                            <div class="filter-option">
+                                                <label class="tick">QM Series<input type="checkbox" checked="checked">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">QM-HB Series <input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">SL Series<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="box border-bottom">
+                                        <div class="box-label">
+                                            Industries
+                                            <button class="btn ml-auto" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#inner-box1" aria-expanded="false"
+                                                aria-controls="inner-box" id="out" onclick="outerFilter()">
+                                                <span class="fas fa-minus"></span>
+                                                <span class="fas fa-plus"></span>
+
+                                            </button>
+                                        </div>
+                                        <div id="inner-box1" class="mt-2 mr-1 collapse" style="">
+                                            @if ($industries->isNotEmpty())
+                                                @foreach ($industries as $i => $industry)
+                                                    <div class="filter-option">
+                                                        <label class="tick">{{ $industry->title }} <input
+                                                                type="checkbox"
+                                                                @if ($i == 0) checked="checked" @endif>
+                                                            <span class="check"></span>
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row ">
+                                <div class="col-md-12 col-12">
+                                    <div class="top-head-bar justify-content-between d-flex align-items-center"></div>
+                                </div>
+                                @if ($products->isNotEmpty())
+                                    @foreach ($products as $i => $p)
+                                        <div class="col-md-6 col-lg-4 col-xl-4 all iPRO1 select-box">
+                                            <div class="product py-4">
+                                                <div class="product_img">
+                                                    <figure>
+                                                        <img src="{{ asset(isset($p->featured_image) ? 'images/' . $p->featured_image : 'images/computerbanner.jpg') }}"
+                                                            alt="product img">
+                                                    </figure>
+                                                </div>
+                                                <div class="product_details">
+                                                    <div class="product_code">ANDROID DISPLAY</div>
+                                                    <div class="product_name">
+                                                        <h4>{{ $p->title }}</h4>
+                                                    </div>
+                                                    <div class="product_des">
+                                                        <p>{{ $p->short_description }}</p>
+                                                    </div>
+                                                    <a href="{{ url('product/' . $p->slug) }}"
+                                                        class="inquire-now-btn">INQUIRE NOW</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                <div class="col-md-12 load-more-col text-center">
+                                    <a href="#" class="load-more">Load more</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+
+        </main>
+    @elseif($displaysolutions->design == 'basic')
+        <main class="main_content">
+            <section class="top-inner-banner">
+                <div class="top_banner_slider">
+
+                    @if ($sliders->isNotEmpty())
+                        @foreach ($sliders as $i => $slider)
+                            <div class="banner_slide">
+                                <div class="banner_slide_img">
+                                    <figure>
+                                        <img src="{{ asset(isset($slider->image) ? 'images/' . $slider->image : 'images/computerbanner.jpg') }}"
+                                            alt="banner">
+                                    </figure>
+                                </div>
+                                <div class="banner_slide_caption">
+                                    @if (!empty($slider->slide_title))
+                                        <div class="container relative">
+                                            <div class="top-banner-content">
+                                                <h3>{{ $slider->slide_title }}</h3>
+                                                <p>{!! $slider->slide_content !!}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                    <!-- slid end -->
+                </div>
+            </section>
+            <section class="breadcrumb-sec">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Home</li>
+                            <li class="breadcrumb-item">Display Solution</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ $displaysolutions->title }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </section>
+
+
+
+            <section class="sec_padd product_display_solution">
+                <div class="container">
+
+
+                    <div class="head_cmn text-center">
+                        <h2 class="head_2">{{ $displaysolutions->title }}</h2>
+                        <div class="sec_p text-center">
+                            <p>Effortlessly deliver better, more engaging content to your audience with a fully integrated
+                                Digital Signage solution. Panasonic is your all-in-one strategic solution partner for
+                                providing the best customer experience from your digital signage applications.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-10 mx-auto">
+
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center justify-content-center g-3">
+
+
+                        @if ($getRelatedSolutions->isNotEmpty())
+                            @foreach ($getRelatedSolutions as $i => $value)
+                                @if ($i == 0)
+                                    <div class="col-md-12">
+                                        <div class="display_box">
+                                            <div class="display_banner display_hover_top">
+                                                <figure>
+                                                    <img src="{{ asset('/') }}images/product_banner_1.jpg">
+                                                </figure>
+                                                <div class="text-caption">
+                                                    <h3>{{ $value->title }}</h3>
+                                                    <p>Effortlessly deliver better, more engaging content to your
+                                                        audience<br> with a
+                                                        fully integrated Digital Signage solution.</p>
+                                                    <a href="{{ route('displaysolutions', ['slug' => $value->slug]) }}"
+                                                        class="btn View-all-btn common-btn">View All <span
+                                                            class="fas fa-arrow-right"></span></i></a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if (!$i == 0)
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="display_right">
+                                            <div class="display_banner_fig display_hover">
+                                                <figure>
+                                                    <img src="{{ asset('/') }}images/product_banner_1.jpg">
+                                                </figure>
+                                                <div class="text-caption">
+                                                    <h3>{{ $value->title }}</h3>
+                                                    <p>Lorem ipsum dolor sit amet, conse sadipscing elitr, sed diam non umy
+                                                        eirmod
+                                                        tempor Lorem ipsum dolor sit amet, conse sadipscing elitr, sed diam
+                                                        non
+                                                        umy
+                                                        eirmod tempor</p>
+                                                    <a href="{{ route('displaysolutions', ['slug' => $value->slug]) }}"
+                                                        class="btn View-all-btn common-btn">View All <span
+                                                            class="fas fa-arrow-right"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endif
+
+
+
+
+
+
+                    </div>
+
+
+                </div>
+            </section>
+
+            <section class="top-filter-sec">
+                <div class="container">
+                    <div class="filter-cst">
+                        <div class="filter-left">
+                            <div class="filter-icon">
+                                <div class="icon"><span></span><span></span><span></span><span></span></div> Filter
+                            </div>
+                            <div class="product-found">10 products found</div>
+                        </div>
+                        <div class="category_select">
+                            <select name="boxes" class="boxselect">
+                                <option value="all">Newest</option>
+                                <option value="iPRO1">iPRO1</option>
+                                <option value="iPRO2">iPRO2</option>
+                                <option value="iPRO3">iPRO3</option>
+                                <option value="iPRO4">iPRO4</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="Products_listing_sec sec_padd">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="product_sidebar">
+                                <div class="filter">
+                                    <!-- <h5>Filter By</h5> -->
+
+                                    <div class="box border-bottom">
+                                        <div class="box-label">
+                                            Type
+                                            <button class="btn ml-auto" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#inner-box" aria-expanded="false"
+                                                aria-controls="inner-box" id="out" onclick="outerFilter()">
+                                                <span class="fas fa-minus"></span>
+                                                <span class="fas fa-plus"></span>
+                                            </button>
+                                        </div>
+                                        <div id="inner-box" class="mt-2 mr-1 collapse" style="">
+                                            <div class="filter-option">
+                                                <label class="tick">QM Series<input type="checkbox" checked="checked">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">QM-HB Series <input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">SL Series<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <label class="tick">PTZ cameras<input type="checkbox">
+                                                    <span class="check"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="box border-bottom">
+                                        <div class="box-label">
+                                            Industries
+                                            <button class="btn ml-auto" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#inner-box1" aria-expanded="false"
+                                                aria-controls="inner-box" id="out" onclick="outerFilter()">
+                                                <span class="fas fa-minus"></span>
+                                                <span class="fas fa-plus"></span>
+
+                                            </button>
+                                        </div>
+                                        <div id="inner-box1" class="mt-2 mr-1 collapse" style="">
+                                            @if ($industries->isNotEmpty())
+                                                @foreach ($industries as $i => $industry)
+                                                    <div class="filter-option">
+                                                        <label class="tick">{{ $industry->title }} <input
+                                                                type="checkbox"
+                                                                @if ($i == 0) checked="checked" @endif>
+                                                            <span class="check"></span>
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row ">
+                                <div class="col-md-12 col-12">
+                                    <div class="top-head-bar justify-content-between d-flex align-items-center">
+
+                                    </div>
+                                </div>
+                                @if ($products->isNotEmpty())
+                                    @foreach ($products as $i => $p)
+                                        <div class="col-md-6 col-lg-4 col-xl-4 all iPRO1 select-box">
+                                            <div class="product py-4">
+                                                <div class="product_img">
+                                                    <figure>
+                                                        <img src="{{ asset(isset($p->featured_image) ? 'images/' . $p->featured_image : 'images/computerbanner.jpg') }}"
+                                                            alt="product img">
+                                                    </figure>
+                                                </div>
+                                                <div class="product_details">
+                                                    <div class="product_code">ANDROID DISPLAY</div>
+                                                    <div class="product_name">
+                                                        <h4>{{ $p->title }}</h4>
+                                                    </div>
+                                                    <div class="product_des">
+                                                        <p>{{ $p->short_description }}</p>
+                                                    </div>
+                                                    <a href="{{ url('product/' . $p->slug) }}"
+                                                        class="inquire-now-btn">INQUIRE NOW</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                <div class="col-md-12 load-more-col text-center">
+                                    <a href="#" class="load-more">Load more</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+
+        </main>
+    @endif
+
+@endsection
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).getElementById('loadMoreBtn').addEventListener('click', function() {
+        // Make an AJAX request to fetch all products
+        fetch('{{ url('/load-more-products') }}') // Use the url helper function
+            .then(response => response.json())
+            .then(data => {
+                // Update the product display with all products
+                const productDisplay = document.getElementById('productDisplay');
+                productDisplay.innerHTML = ''; // Clear the existing products
+
+                data.products.forEach(product => {
+                    const productDiv = document.createElement('div');
+                    productDiv.textContent = product.name;
+                    productDisplay.appendChild(productDiv);
+                });
+
+                // You can update the total count or perform additional logic here
+
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
+    });
+</script>

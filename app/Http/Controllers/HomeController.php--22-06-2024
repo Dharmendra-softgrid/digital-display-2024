@@ -1,0 +1,379 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Pages;
+use App\ProductCategory;
+use App\ProductCategoryMap;
+use App\ProductIndustryMap;
+use App\Product;
+use App\ProductSpecifications;
+use App\Newsroom;
+use App\Industries;
+use App\Settings;
+use App\Contacts;
+use App\Slider;
+use App\Content;
+use App\SuccessStories;
+use App\DisplaySolution;
+use App\ProductImages;
+use App\ProductVideos;
+use App\ProductBlog;
+use App\IndustryImages;
+use App\IndustryBlog;
+use App\Menu;
+use App\Casestudy;
+use App\ProfessionalDisplaySolution;
+use App\ProductVariant;
+use App\ProductOtherSpecification;
+use App\Video;
+use App\VideoLink;
+use App\InquireNow;
+use App\IndustryDetail;
+use App\SolutionDetail;
+use App\ProductComponent;
+use Validator;
+use DB;
+use Illuminate\Support\Collection;
+
+class HomeController extends Controller
+{
+    public function __construct()
+    {
+        // Set a global variable in the constructor
+        /* This code gets all menu listed in menu table in the form of array */
+        $this->menus =  Menu::with('children')->orderBy('sort_order', 'ASC')->where('parent', 0)->get();
+        $this->industries = Industries::get();
+        $this->profDisplaySolution = DisplaySolution::join('professional_display_solution', 'display_solution.id', '=', 'professional_display_solution.solution_id')
+        ->select('professional_display_solution.*', 'display_solution.title as solution_title', 'display_solution.slug as solution_slug')
+        ->orderBy('professional_display_solution.id', 'asc')->get();
+    }
+    /* main function */
+    public function index(Request $request){
+        $data['menus'] = $this->menus;
+        $data['industries'] = $this->industries;
+        $data['successstories'] = SuccessStories::orderBy('id', 'DESC')->paginate(15);
+        $data['newsrooms'] = Newsroom::orderBy('id', 'DESC')->paginate(4);
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'ASC')->paginate(15);
+        $data['products'] = Product::orderBy('id', 'DESC')->paginate(15);
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'HOME')->paginate(15);
+        $data['first_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'first_section')->where('page', 'HOME')->first();
+        $data['second_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'second_section')->where('page', 'HOME')->first();
+        $data['third_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'third_section')->where('page', 'HOME')->first();
+        $data['fourth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fourth_section')->where('page', 'HOME')->first();
+        $data['fifth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fifth_section')->where('page', 'HOME')->first();
+        $data['sixth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'sixth_section')->where('page', 'HOME')->first();
+        $data['pfd'] = $this->profDisplaySolution;
+        $data['videos'] = Video::orderBy('id', 'DESC')->where('type', 'HOME')->paginate(15);
+
+        // Retrieve the first record
+        $data['homeDisplaySolution'] = DisplaySolution::orderBy('sort_order', 'ASC')->where('display_at_homepage','1')->paginate(15);
+       
+        $data['videoLink'] = VideoLink::orderBy('sort_order', 'Asc')->where('type', 'HOME')->paginate(15);
+        $data['firstVideoLink'] = VideoLink::orderBy('sort_order', 'Asc')->where('type', 'HOME')->first();
+        return view('home', $data);
+    }
+
+    public function successStory(Request $request){ 
+        $data['menus'] = $this->menus;
+        $data['successstories'] = SuccessStories::orderBy('id', 'DESC')->paginate(15);        
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'SUCCESS_STORY')->paginate(15);          
+        $data['industries'] = $this->industries;
+        $data['pfd'] = $this->profDisplaySolution;
+        $data['videoLink'] = VideoLink::orderBy('sort_order', 'Asc')->where('type', 'HOME')->paginate(15);
+        $data['firstVideoLink'] = VideoLink::orderBy('sort_order', 'Asc')->where('type', 'HOME')->first();
+        return view('successstory', $data);
+    }
+
+    public function successStoryDetail(Request $request, $slug){
+        $data['menus'] = $this->menus;
+        //var_dump($slug);
+        //$data['successstories'] = SuccessStories::orderBy('id', 'DESC')->paginate(15);
+        $data['successstory'] = SuccessStories::where('slug', $slug)->first();        
+        //dd([$data['successstory']->toSql(),$data['successstory']->getBindings()]);
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'SUCCESS_STORY')->paginate(15);
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        return view('successstorydetail', $data);
+    }
+
+    public function newsRoom(Request $request){ 
+        $data['menus'] = $this->menus;
+        $data['newsrooms'] = Newsroom::orderBy('id', 'DESC')->paginate(15);        
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'NEWS_ROOM')->paginate(15); 
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        return view('newsroom', $data);
+    }
+
+    public function newsRoomDetail(Request $request, $slug){
+        $data['menus'] = $this->menus;
+        //var_dump($slug);
+        //$data['successstories'] = SuccessStories::orderBy('id', 'DESC')->paginate(15);
+        $data['newsrooms'] = Newsroom::inRandomOrder()->take(3)->get();
+        $data['newsrooms'] = new \Illuminate\Pagination\LengthAwarePaginator($data['newsrooms'], count($data['newsrooms']), 15);
+        $newsroom = Newsroom::where('slug', $slug)->first();
+        $data['newsroom'] = $newsroom;
+        // get previous user id
+        $data['previous'] = Newsroom::where('id', '<', $newsroom->id)->orderBy('id','desc')->first();
+        // get next user id
+        $data['next'] = Newsroom::where('id', '>', $newsroom->id)->orderBy('id','asc')->first();
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        //dd([$data['successstory']->toSql(),$data['successstory']->getBindings()]);
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'NEWS_ROOM')->paginate(15);        
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        return view('newsroomdetail', $data);
+    }
+
+    public function productDetail(Request $request, $slug){    
+        $data['menus'] = $this->menus;
+        $product = Product::where('slug', $slug)->first();
+        $data['product'] = $product;
+        $data['productImages'] = ProductImages::orderBy('id', 'DESC')->where('product_id', $product->id)->get();
+        $data['productBrochures'] = ProductSpecifications::where('title', 'brochures')->where('product_id', $product->id)->get();
+        $productCategoryIdArr = ProductCategoryMap::where('product_id', $product->id)->groupBy('product_category_id')->pluck('product_category_id')->toArray();
+        $productIdArr = ProductCategoryMap::whereIn('product_category_id', $productCategoryIdArr)->where('product_id','!=', $product->id)->pluck('product_id')->toArray();
+        $data['relatedProducts'] = Product::whereIn('id', $productIdArr)->get();
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['productBlog'] = ProductBlog::orderBy('id', 'DESC')->where('product_id', $product->id)->get();
+        $data['productVariant'] = ProductVariant::orderBy('id', 'DESC')->where('product_id', $product->id)->get();
+        $data['productSpecification'] = ProductSpecifications::orderBy('id', 'DESC')->where('product_id', $product->id)->where('type', 'specification')->get();
+        $productComponents = ProductComponent::orderBy('id', 'DESC')
+    ->where('product_id', $product->id)
+    ->get()
+    ->groupBy('component_type');
+
+        $data['productComponents'] = $productComponents;
+        $data['ProductOtherSpecification'] = ProductOtherSpecification::orderBy('id', 'DESC')->where('product_id', $product->id)->get();
+        //dd([$data['successstory']->toSql(),$data['successstory']->getBindings()]);   
+        $data['pfd'] = $this->profDisplaySolution;            
+        return view('productdetail', $data);
+    }
+
+    public function industryDetail(Request $request, $slug){ 
+        $data['menus'] = $this->menus;
+        $industry = Industries::where('slug', $slug)->first();
+        $data['industry'] = $industry;
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', $data['industry']['title'])->paginate(15);
+        $data['galleryImages'] = IndustryImages::orderBy('id', 'DESC')->where('industry_id', $industry->id)->get();
+        //$data['productBrochures'] = ProductSpecifications::where('title', 'brochures')->where('product_id', $product->id)->get();
+        $productIdArr = ProductIndustryMap::where('industry_id', $industry->id)->groupBy('product_id')->pluck('product_id')->toArray();
+        //$productIdArr = ProductCategoryMap::whereIn('product_category_id', $productCategoryIdArr)->where('product_id','!=', $product->id)->pluck('product_id')->toArray();
+        $data['relatedProducts'] = Product::whereIn('id', $productIdArr)->get();
+        $data['industries'] = Industries::orderBy('id', 'ASC')->get();
+        //dd([$data['successstory']->toSql(),$data['successstory']->getBindings()]);   
+        $data['industryDetail'] = IndustryDetail::orderBy('id', 'ASC')->where('industries_id', $industry->id)->get();
+        $data['IndustryBlog'] = IndustryBlog::orderBy('id', 'DESC')->where('industry_id', $industry->id)->get();            
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        return view('industrydetail', $data);
+    }
+    public function aboutus(Request $request){ 
+        $data['menus'] = $this->menus;
+        $data['first_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'first_section')->where('page', 'ABOUT')->first();
+        $data['second_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'second_section')->where('page', 'ABOUT')->first();
+        $data['third_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'third__section')->where('page', 'ABOUT')->first();
+        $data['fourth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fourth_section')->where('page', 'ABOUT')->first();
+        $data['fifth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fifth_section')->where('page', 'ABOUT')->first();
+        $data['sixth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'sixth_section')->where('page', 'ABOUT')->first();
+        $data['seventh_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'seventh_section')->where('page', 'ABOUT')->first();
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'ABOUTUS')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        return view('aboutus',$data);
+    }
+    public function displaysolutions(Request $request, $slug){ 
+        $data['menus'] = $this->menus;
+        
+        $displaysolutions = DisplaySolution::where('slug', $slug)->first();
+        $data['displaysolutions'] = $displaysolutions;
+        $data['solutions'] = DisplaySolution::orderBy('id', 'ASC')->get();
+        $data['solutionDetail'] = SolutionDetail::orderBy('id', 'ASC')->where('display_solution_id', $displaysolutions->id)->get();
+        $menuData = Menu::where('page', $displaysolutions->id)->first();
+        $data['parentBredcrumName'] = Menu::where('id', $menuData['parent'])->first(); 
+        $data['industries'] = $this->industries;
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', $data['displaysolutions']['title'])->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        $data['products'] = Product::inRandomOrder()->take(7)->get();
+        // Get the total count
+        $data['totalProductCount'] = Product::count();
+        $data['signageotherbanner'] = Content::orderBy('id', 'DESC')->where('page', 'Signage Enterprise')->first();
+        $data['slug'] = $slug;
+        //$data['products'] = new \Illuminate\Pagination\LengthAwarePaginator($data['product'], count($data['product']), 15);
+        $data['homeDisplaySolution'] = DisplaySolution::orderBy('sort_order', 'ASC')->where('display_at_homepage','1')->paginate(15);
+        $getMenuId = DisplaySolution::where('id', $displaysolutions->id)->value('menu_id');
+        $data['getRelatedSolutions'] = Menu::orderBy('sort_order', 'ASC')->whereIn('parent', [$getMenuId])
+        ->orderBy('sort_order', 'ASC')
+        ->get();
+        return view('displaysolutions',$data);
+    }
+    public function casestudy(Request $request){
+        $data['menus'] = $this->menus;
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['slider'] = Slider::orderBy('id', 'DESC')->where('type', 'CASESTUDY')->first();
+        $data['casestudies'] = Casestudy::orderBy('id', 'DESC')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        return view('casestudy', $data);
+    }
+    public function casestudydetails(Request $request, $slug){
+        $data['menus'] = $this->menus;
+        $data['industries'] = Industries::orderBy('id', 'DESC')->paginate(6);
+        $data['displaysolutions'] = $this->industries;
+        $data['slider'] = Slider::orderBy('id', 'DESC')->where('type', 'CASESTUDYDETAILS')->first();
+        $data['casestudies'] = Casestudy::orderBy('id', 'DESC')->paginate(15);
+        $data['casestudiesdetails'] = Casestudy::where('slug', $slug)->first();
+        $data['product'] = Product::inRandomOrder()->take(4)->get();
+        $data['products'] = new \Illuminate\Pagination\LengthAwarePaginator($data['product'], count($data['product']), 15);
+        $data['pfd'] = $this->profDisplaySolution;
+        return view('casestudydetails', $data);
+    }
+    public function privacyPolicy(Request $request){
+        $data['menus'] = $this->menus;
+        $data['first_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'first_section')->where('page', 'ABOUT')->first();
+        $data['second_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'second_section')->where('page', 'ABOUT')->first();
+        $data['third_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'third__section')->where('page', 'ABOUT')->first();
+        $data['fourth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fourth_section')->where('page', 'ABOUT')->first();
+        $data['fifth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fifth_section')->where('page', 'ABOUT')->first();
+        $data['sixth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'sixth_section')->where('page', 'ABOUT')->first();
+        $data['seventh_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'seventh_section')->where('page', 'ABOUT')->first();
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['slider'] = Slider::orderBy('id', 'DESC')->where('type', 'ABOUTUS')->first();
+        $data['pfd'] = $this->profDisplaySolution;
+        $data['first_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'first_section')->where('page', 'PRIVACYPOLICY')->first();
+        return view('privacypolicy', $data);
+    }
+    public function terms(Request $request){
+        $data['menus'] = $this->menus;
+        $data['first_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'first_section')->where('page', 'ABOUT')->first();
+        $data['second_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'second_section')->where('page', 'ABOUT')->first();
+        $data['third_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'third__section')->where('page', 'ABOUT')->first();
+        $data['fourth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fourth_section')->where('page', 'ABOUT')->first();
+        $data['fifth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fifth_section')->where('page', 'ABOUT')->first();
+        $data['sixth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'sixth_section')->where('page', 'ABOUT')->first();
+        $data['seventh_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'seventh_section')->where('page', 'ABOUT')->first();
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['slider'] = Slider::orderBy('id', 'DESC')->where('type', 'ABOUTUS')->first();
+        $data['pfd'] = $this->profDisplaySolution;
+        $data['first_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'first_section')->where('page', 'TERMS')->first();
+        return view('terms', $data);
+    }
+    public function inquireNow(Request $request){
+        $data['menus'] = $this->menus;
+        $data['first_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'first_section')->where('page', 'ABOUT')->first();
+        $data['second_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'second_section')->where('page', 'ABOUT')->first();
+        $data['third_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'third__section')->where('page', 'ABOUT')->first();
+        $data['fourth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fourth_section')->where('page', 'ABOUT')->first();
+        $data['fifth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fifth_section')->where('page', 'ABOUT')->first();
+        $data['sixth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'sixth_section')->where('page', 'ABOUT')->first();
+        $data['seventh_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'seventh_section')->where('page', 'ABOUT')->first();
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'INQUIRE NOW')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        $data['industries'] = Industries::with('IndustryBlog')->get();
+        $data['products'] = Product::orderBy('id', 'DESC')->get();
+        return view('inquirenow', $data);
+    }
+    public function postInquiry(Request $request){
+        $messages = array(
+            //'images.required' => 'Atleast 1 image required',
+        );
+        // Validation rules for the request
+        $rules=[
+            'first_name' => 'required|max:255',  
+            'last_name' => 'required|max:255', 
+            'email' => 'required|max:255', 
+            'phone' => 'required|max:255', 
+            'state' => 'required|max:255', 
+            'city' => 'required|max:255', 
+            'company' => 'required|max:255', 
+            'interested_category' => 'required|max:255', 
+            'interested_subcategory' => 'required|max:255', 
+            'product' => 'required', 
+        ];
+        $inquireNow = new InquireNow(); 
+        $inquireNow->first_name = $request->first_name;
+        $inquireNow->last_name = $request->last_name;
+        $inquireNow->email = $request->email;
+        $inquireNow->phone = $request->phone;
+        $inquireNow->state = $request->state;
+        $inquireNow->city = $request->city;
+        $inquireNow->company = $request->company;
+        $inquireNow->interested_category = $request->interested_category;
+        $inquireNow->interested_subcategory = $request->interested_subcategory;
+        $inquireNow->product = $request->product;
+        // Save the inquiry to the database   
+        $inquireNow->save();  
+        return redirect()->route('thankyou')->with('success', "Induiry Submitted successfully.");   
+    }
+    public function thankyou(Request $request){
+        $data['menus'] = $this->menus;
+        $data['first_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'first_section')->where('page', 'ABOUT')->first();
+        $data['second_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'second_section')->where('page', 'ABOUT')->first();
+        $data['third_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'third__section')->where('page', 'ABOUT')->first();
+        $data['fourth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fourth_section')->where('page', 'ABOUT')->first();
+        $data['fifth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'fifth_section')->where('page', 'ABOUT')->first();
+        $data['sixth_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'sixth_section')->where('page', 'ABOUT')->first();
+        $data['seventh_sec_content'] = Content::orderBy('id', 'DESC')->where('section_type', 'seventh_section')->where('page', 'ABOUT')->first();
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'INQUIRE NOW')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        $data['industries'] = Industries::with('IndustryBlog')->get();
+        $data['products'] = Product::orderBy('id', 'DESC')->get();
+        return view('thankyou',$data);
+        
+    }
+    public function search(Request $request)
+    { 
+        $data['menus'] = $this->menus;
+        $data['industries'] = $this->industries;
+        $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
+        $data['sliders'] = Slider::orderBy('id', 'DESC')->where('type', 'INQUIRE NOW')->paginate(15);
+        $data['pfd'] = $this->profDisplaySolution;
+        $data['industries'] = Industries::with('IndustryBlog')->get();
+        $data['products'] = Product::orderBy('id', 'DESC')->get();
+        $query = $request->input('query');
+
+        // Perform search on each model
+        $products = Product::where('title', 'like', "%$query%")->orWhere('short_description', 'like', "%$query%")->orWhere('key_features', 'like', "%$query%")->get();
+        $news = Newsroom::where('title', 'like', "%$query%")->get();
+        $about = Content::where('page', 'ABOUT')
+                ->where(function ($queryBuilder) use ($query) {
+                    $queryBuilder->where('title', 'like', "%$query%")
+                                 ->orWhere('content', 'like', "%$query%");
+                })
+                ->get();
+        $successStories = SuccessStories::where('title', 'like', "%$query%")->orWhere('content', 'like', "%$query%")->get();
+        $industries = Industries::where('title', 'like', "%$query%")->orWhere('content', 'like', "%$query%")->get();
+        $home = Content::where('page', 'HOME')
+                ->where(function ($queryBuilder) use ($query) {
+                    $queryBuilder->where('title', 'like', "%$query%")
+                                 ->orWhere('content', 'like', "%$query%");
+                })
+                ->get();
+        // Aggregate the search results
+        $data['searchData'] = collect([
+            'products' => $products,
+            'news' => $news,
+            'about' => $about,
+            'successStories' => $successStories,
+            'industries' => $industries,
+            'home' => $home,
+        ]);
+        $data['input'] = $query; 
+        
+        return view('searchResult',$data);
+    }
+}

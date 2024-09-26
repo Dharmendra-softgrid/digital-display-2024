@@ -1,0 +1,9 @@
+"ftp-simple.connections": {
+    "myConnection": {
+        "host": "ftp.example.com",
+        "port": 21,
+        "username": "your-ftp-username",
+        "password": "your-ftp-password",
+        "secure": false // Set to true if using FTPS
+    }
+}

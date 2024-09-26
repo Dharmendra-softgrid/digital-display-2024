@@ -1,0 +1,551 @@
+@extends('layouts.app')
+
+
+@section('content')
+<style>
+  .content_tab .col-md-6 {
+    padding: 0;
+}
+
+.product_tab_content {
+    padding: 60px;
+}
+
+.tab-row-sec:nth-child(2n+2) {
+    border: none;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+@media only screen and (max-width: 767px)
+{
+.content_tab .col-md-6 
+{
+  padding: 0 15px;
+}
+
+.product_tab_content {
+    padding:20px;
+}
+.brochurer-download a.download-link {
+    min-width: 130px;
+}
+
+}
+</style>
+<main class="main_content">
+  <section class="breadcrumb-sec">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Home</li>
+          <li class="breadcrumb-item">Surveillance Camera</li>
+          <li class="breadcrumb-item active" aria-current="page">ipro cameras</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+  <section class="Products_details_page">
+    <div class="container">
+      <div class="row align-items-center">
+      <div class="col-md-6">
+        <!-- <div class="Products_img">
+           <img class="img-fluid" src="assets/images/product_img.png" alt="Products">
+        </div> -->
+
+          <div class="product-vehicle-detail-banner banner-content clearfix">
+                <div class="product-banner-slider">
+                    <div class="productslider slider-for-product">
+                        <div class="slider-banner-image">
+                              <img class="img-fluid" src="{{asset('/')}}images/product_img.png" alt="Products">
+                        </div> 
+                        <div class="slider-banner-image">
+                              <img class="img-fluid" src="{{asset('/')}}images/product_img.png" alt="Products">
+                        </div> 
+                         <div class="slider-banner-image">
+                              <img class="img-fluid" src="{{asset('/')}}images/product_img.png" alt="Products">
+                        </div> 
+                         <div class="slider-banner-image">
+                              <img class="img-fluid" src="{{asset('/')}}images/product_img.png" alt="Products">
+                        </div> 
+                         <div class="slider-banner-image">
+                              <img class="img-fluid" src="{{asset('/')}}images/product_img.png" alt="Products">
+                        </div> 
+                         <div class="slider-banner-image">
+                              <img class="img-fluid" src="{{asset('/')}}images/product_img.png" alt="Products">
+                        </div> 
+                    </div>
+
+                    <div class="slider slider-nav product-thumb-image">
+                        <div class="product-thumbnail-image">
+                            <div class="productThumbImg">
+                                <img src="https://images.unsplash.com/photo-1570942872213-1242607a35eb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="slider-img">
+                            </div>
+
+                        </div>
+                        <div class="product-thumbnail-image">
+                            <div class="productThumbImg">
+                                <img src="https://images.unsplash.com/photo-1570171278960-d6c2b316f3b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="slider-img">
+                            </div>
+
+                        </div>
+
+                         <div class="product-thumbnail-image">
+                            <div class="productThumbImg">
+                                <img src="https://images.unsplash.com/photo-1570171278960-d6c2b316f3b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="slider-img">
+                            </div>
+
+                        </div>
+
+
+                         <div class="product-thumbnail-image">
+                            <div class="productThumbImg">
+                                <img src="https://images.unsplash.com/photo-1570171278960-d6c2b316f3b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="slider-img">
+                            </div>
+            
+                        </div>
+
+
+                         <div class="product-thumbnail-image">
+                            <div class="productThumbImg">
+                                <img src="https://images.unsplash.com/photo-1570171278960-d6c2b316f3b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="slider-img">
+                            </div>
+        
+                        </div>
+
+
+                         <div class="product-thumbnail-image">
+                            <div class="productThumbImg">
+                                <img src="https://images.unsplash.com/photo-1570171278960-d6c2b316f3b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="slider-img">
+                            </div>
+                    
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        
+      </div>
+      <div class="col-md-6"> 
+        <div class="main_products_details">
+          <div class="product_description">
+            <div class="products_code product_small_name">Android display</div>
+            <div class="products_name"><h2>1m 89.3cm (75”) Interactive Display</h2></div>
+          </div>
+          <div class="product_info">
+            <p>2MP(1080p) Indoor Box Network Camera with AI engine</p>
+            <ul>
+              <li>Better interaction with best-in-class multi-touch for education</li>
+              <li>Boost learning with built-in Android OS</li>
+              <li>Powerful screen sharing, smart, wireless sharing from multiple devices</li>
+              <li>Create more engaging lessons with the built in intelligent Apps</li>
+             
+            </ul>
+          </div>
+          <div class="choose_size">
+            <h5>Choose Your Size</h5>
+
+            <div class="Size_button_block">
+
+
+             <div class="radio_button">
+                <input type="radio" id="65Inch" name="type" value="65Inch">
+                 <label data-icon="M" for="65Inch">
+                   <p>65 Inch</p>
+                 </label>
+             </div>
+          
+           <div class="radio_button">
+                <input type="radio" id="85Inch" name="type" value="85Inch">
+                 <label data-icon="L" for="85Inch">
+                  <p>85 Inch </p>
+                 </label>
+            </div>
+          </div>
+            
+          </div>
+           <div class="inquire-block mt-4">
+             <a class="inquire-now-link" href="#">INQUIRE NOW</a>
+           </div>
+  
+          
+        </div>
+      </div>
+        
+      </div>
+  </section>
+  <section class="product_tab_sec">
+    <div class="container">
+          <nav class="tab_nav">
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Key Features</button>
+              <button class="nav-link" id="nav-specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Specifications</button>
+              <button class="nav-link" id="nav-resources-tab" data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Download brochures</button>
+              <button class="nav-link" id="nav-RelatedProducts-tab" data-bs-toggle="tab" data-bs-target="#RelatedProducts" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Related Products</button>
+            </div>
+          </nav>
+
+          <div class="tab-content p-3" id="nav-tabContent">
+            <div class="tab-pane fade active show" id="features" role="tabpanel" aria-labelledby="nav-features-tab">
+              <!-- Key Features start -->
+              <div class="tabs_container">
+              <h3 class="desktop_hide mobile_title ">Key Features</h3>
+
+               <div class="featurescontent tabs_content_block">
+                <div class="featurescontent text-center">
+                  <div class="row align-items-center">
+                     <div class="col-md-9">
+                    <h3>Boost learning with familiar UX</h3>
+                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren.</p>
+                 </div>
+            </div>
+              </div>
+
+              <div class="content_tab mt-5 mb-5">
+
+                  <div class="row align-items-center tab-row-sec">
+
+                    <div class="col-md-6 left-col col-img">
+                       <div class="product-tab-img ">
+                         <img class="img-fluid" src="{{asset('/')}}images//product_img.png" alt="Products">
+                     </div>
+                   </div>
+
+                  <div class="col-md-6 right-col col-content">
+                    <div class="product_tab_content">
+                      <h4>Boost learning with familiar UX</h4>
+                      <p>WAC Series is an Android OS-based product, providing intuitive and convenient usability to users. Its excellent compatibility with Android devices makes it easy for teachers to boost learning, while the ability to customize the home screen with frequently used apps brings added convenience.</p>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row align-items-center tab-row-sec">
+
+                    <div class="col-md-6 left-col col-img">
+                       <div class="product-tab-img ">
+                         <img class="img-fluid" src="{{asset('/')}}images//product_img.png" alt="Products">
+                     </div>
+                   </div>
+
+                  <div class="col-md-6 right-col col-content">
+                    <div class="product_tab_content">
+                      <h4>Boost learning with familiar UX</h4>
+                      <p>WAC Series is an Android OS-based product, providing intuitive and convenient usability to users. Its excellent compatibility with Android devices makes it easy for teachers to boost learning, while the ability to customize the home screen with frequently used apps brings added convenience.</p>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row align-items-center tab-row-sec">
+
+                    <div class="col-md-6 left-col col-img">
+                       <div class="product-tab-img ">
+                         <img class="img-fluid" src="{{asset('/')}}images//product_img.png" alt="Products">
+                     </div>
+                   </div>
+
+                  <div class="col-md-6 right-col col-content">
+                    <div class="product_tab_content">
+                      <h4>Boost learning with familiar UX</h4>
+                      <p>WAC Series is an Android OS-based product, providing intuitive and convenient usability to users. Its excellent compatibility with Android devices makes it easy for teachers to boost learning, while the ability to customize the home screen with frequently used apps brings added convenience.</p>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row align-items-center tab-row-sec">
+
+                    <div class="col-md-6 left-col col-img">
+                       <div class="product-tab-img ">
+                         <img class="img-fluid" src="{{asset('/')}}images//product_img.png" alt="Products">
+                     </div>
+                   </div>
+
+                  <div class="col-md-6 right-col col-content">
+                    <div class="product_tab_content">
+                      <h4>Boost learning with familiar UX</h4>
+                      <p>WAC Series is an Android OS-based product, providing intuitive and convenient usability to users. Its excellent compatibility with Android devices makes it easy for teachers to boost learning, while the ability to customize the home screen with frequently used apps brings added convenience.</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              </div>
+             <!-- Key Features End -->
+
+              </div>
+            </div>
+            <div class="tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <!--specifications  start -->
+
+              <div class="tabs_container">
+              <h3 class="desktop_hide mobile_title ">Specifications</h3>
+              <div class="tabs_content_block">
+
+                
+               <div class="accordion " id="featuresAccordion">
+
+                <div class="accordion-item">
+                  <h2 id="features1" class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#featuresHeading1" aria-expanded="true" aria-controls="featuresHeading1">
+                   Camera
+                     </button>
+                  </h2>
+                  <div id="featuresHeading1" class="accordion-collapse collapse show" aria-labelledby="features1" data-bs-parent="#featuresAccordion">
+                    <div class="accordion-body">
+                     <div class="specifications">
+                      <table class="table">
+                            <thead class="thead-inverse">
+                              <tr>
+                               
+                               
+                                <th>Components</th>
+                                <th>Specifications</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                              
+                                <td>Image Sensor</td>
+                                <td>1/1.8 type CMOS image sensor</td>
+                              </tr>
+                              <tr>
+                                
+                                <td>Minimum Illumination</td>
+                                <td>
+                                  @Color : 0.09 lx, BW : 0.05 lx (F1.5, Maximum shutter : Off (1/30s), AGC : 11) <br>
+                                  BW : 0 lx (F1.5, Maximum shutter : Off (1/30 s), <br>
+                                 AGC : 11, when the IR LED is lit) Color : 0.006 lx, <br>
+                                 BW : 0.003 lx (F1.5, Maximum shutter : max. 16/30s, AGC : 11)</td>
+                              </tr>
+                              <tr>
+                                 <td>White Balance</td>
+                                <td>@ATW1/ATW2/AWC</td>
+                              </tr>
+                               <tr>
+                                 <td>Shutter Speed</td>
+                                <td>[30fps mode] 1/30 Fix to 1/10000 Fix [25fps mode] 1/25 Fix to 1/10000 Fix</td>
+                              </tr>
+                               <tr>
+                                 <td>AI Intelligent Auto</td>
+                                <td>On / Off</td>
+                              </tr>
+                               <tr>
+                                 <td>Dynamic Range</td>
+                                <td>Max.132 dB (Super Dynamic : On, Level : 31)</td>
+                              </tr>
+                              <tr>
+                                 <td>Adaptive Black Stretch</td>
+                                <td>The level can be set in the range of 0 to 255.</td>
+                              </tr>
+                              <tr>
+                                <td>Back Light Compensation/High Light Compensation</td>
+                                <td>BLC (Back light compensation) / HLC (High light compensation) / Off The level can be set in the range of 0 to 31. (only when Super dynamic / AI Intelligent Auto : Off)</td>
+
+                              </tr>
+                              <tr>
+                                <td>Fog Compensation</td>
+                                <td>BLC (Back light compensation) / HLC (High light compensation) / Off The level can be set in the range of 0 to 31. (only when Super dynamic / AI Intelligent Auto : Off)</td>
+                              </tr>
+                              <tr>
+                                <td>Maximum Gain</td>
+                                <td>The level can be set in the range of 0 to 11.</td>
+                              </tr>
+                               <tr>
+                                <td>Color/BW (ICR)</td>
+                                <td>Off / On (IR Light Off) / On (IR Light On) / Auto1(IR Light Off) / Auto2 (IR Light On) / Auto3 (SCC)</td>
+                              </tr>
+                              <tr>
+                                <td>IR LED Light</td>
+                                <td>High / Middle / Low / Off, Maximum irradiation distance : 40 m {Approx. 131 ft}</td>
+                              </tr>
+                              <tr>
+                                <td>Digital Noise Reduction (DNR)</td>
+                                <td>The level can be set in the range of 0 to 255.</td>
+                              </tr>
+                              <tr>
+                                <td>Video Motion Detection (VMD)</td>
+                                 <td>Video Motion Detection (VMD)</td>
+                              </tr>
+                               <tr>
+                                <td>Scene Change Detection</td>
+                                 <td>On / Off, 1 area available</td>
+                              </tr>
+                               <tr>
+                                <td>Privacy Zone</td>
+                                <td>On / Off, Up to 8 zones available</td>
+                              </tr>
+                              <tr>
+                                <td>Image Rotation</td>
+                                <td>0 ° (Off) / 90 ° / 180 ° (Upside-down) / 270 °</td>
+                              </tr>
+                              <tr>
+                                <td>Camera Title (OSD)</td>
+                                <td>On / Off Up to 20 characters (alphanumeric characters, marks)</td>
+                              </tr>
+
+
+
+                              
+                            </tbody>
+                          </table>
+                       
+                     </div>
+                     <!--  -->
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="features2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#featuresHeading2" aria-expanded="false" aria-controls="featuresHeading2"> Lens </button>
+                  </h2>
+                  <div id="featuresHeading2" class="accordion-collapse collapse" aria-labelledby="features2" data-bs-parent="#featuresAccordion">
+                    <div class="accordion-body"> Throughout history, robots have both embraced and rejected the act of working with other robots in a collective. While science has shown that collective artificial intelligence helps both intellectual and technological development, it has also shown that some robots really want to just be and think by themselves. How do we harness the benefits of both while avoiding the downfall of each? </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="features3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#featuresHeading3" aria-expanded="false" aria-controls="featuresHeading2"> DORI </button>
+                  </h2>
+                  <div id="featuresHeading3" class="accordion-collapse collapse" aria-labelledby="features3" data-bs-parent="#featuresAccordion">
+                    <div class="accordion-body"> Throughout history, robots have both embraced and rejected the act of working with other robots in a collective. While science has shown that collective artificial intelligence helps both intellectual and technological development, it has also shown that some robots really want to just be and think by themselves. How do we harness the benefits of both while avoiding the downfall of each? </div>
+                  </div>
+                </div>
+              </div>
+
+
+              </div>
+              <!--specifications end  -->
+              
+            </div>
+            <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="av-resources-tab">
+              <!-- resources start -->
+
+              <div class="tabs_container">
+              <h3 class="desktop_hide mobile_title ">Download brochures</h3>
+              <div class="resources-sec tabs_content_block">
+                <ul>
+                  <li>
+                    <h5>Manual files</h5>
+                      <div class="brochure-block">
+                        <div class="brochure-item">
+                       <div class="brochure-thumbnail"><img src="{{asset('/')}}images/brochure-img.png"/ alt="Brochure Image"></div>
+                       <p>Surveillance Camera Brochure</p>
+                     </div>
+                      <div class="brochurer-download"><a class="download-link" href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download="">Download</a></div>
+                     </div>
+                  </li>
+                  
+                </ul>
+              </div>
+
+
+                
+              </div>
+
+              <!-- resources end -->
+              
+
+            </div>
+            <div class="tab-pane fade" id="RelatedProducts" role="tabpanel" aria-labelledby="nav-RelatedProducts-tab">
+
+              <div class="tabs_container">
+              <h3 class="desktop_hide mobile_title ">Related Products</h3>
+              <div class="tabs_content_block">
+
+              <!-- related product start -->
+              <div class="row">
+                 
+                 <div class="col-md-6 col-lg-3 col-xl-3">
+                   <div class="product py-4">
+                      <div class="product_img">
+                        <figure>
+                           <img src="{{asset('/')}}images/product_img.png" alt="product img">
+                        </figure>
+                      </div>
+                        <div class="product_details">
+                          <div class="product_code">LH-98QM6HVS</div>
+                         <div class="product_name"><h4>1m 89.3cm (75”) Interactive Display</h4></div>
+                          <div class="product_des"><p>Built-in Wireless Display, Auto Input Detect and Switch, Real Time Clock…</p></div>
+                            <a href="#" class="inquire-now-btn">INQUIRE NOW</a>
+                        </div>
+
+                   </div>
+                 </div>
+
+                 <div class="col-md-6 col-lg-3 col-xl-3">
+                   <div class="product py-4">
+                      <div class="product_img">
+                        <figure>
+                           <img src="{{asset('/')}}images/product_img.png" alt="product img">
+                        </figure>
+                      </div>
+                        <div class="product_details">
+                         <div class="product_code">LH-98QM6HVS</div>
+                          <div class="product_name"><h4>1m 89.3cm (75”) Interactive Display</h4></div>
+                          <div class="product_des"><p>Built-in Wireless Display, Auto Input Detect and Switch, Real Time Clock…</p></div>
+                            <a href="#" class="inquire-now-btn">INQUIRE NOW</a>
+                        </div>
+
+                   </div>
+                 </div>
+
+
+                 <div class="col-md-6 col-lg-3 col-xl-3">
+                   <div class="product py-4">
+                      <div class="product_img">
+                        <figure>
+                           <img src="{{asset('/')}}images/product_img.png" alt="product img">
+                        </figure>
+                      </div>
+                        <div class="product_details">
+                         <div class="product_code">LH-98QM6HVS</div>
+                        <div class="product_name"><h4>1m 89.3cm (75”) Interactive Display</h4></div>
+                          <div class="product_des"><p>Built-in Wireless Display, Auto Input Detect and Switch, Real Time Clock…</p></div>
+                            <a href="#" class="inquire-now-btn">INQUIRE NOW</a>
+                        </div>
+                   </div>
+                 </div>
+
+                  <div class="col-md-6 col-lg-3 col-xl-3">
+                   <div class="product py-4">
+                      <div class="product_img">
+                        <figure>
+                           <img src="{{asset('/')}}images/product_img.png" alt="product img">
+                        </figure>
+                      </div>
+                        <div class="product_details">
+                         <div class="product_code">LH-98QM6HVS</div>
+                         <div class="product_name"><h4>1m 89.3cm (75”) Interactive Display</h4></div>
+                          <div class="product_des"><p>Built-in Wireless Display, Auto Input Detect and Switch, Real Time Clock…</p></div>
+                            <a href="#" class="inquire-now-btn">INQUIRE NOW</a>
+                        </div>
+                   </div>
+                 </div>
+
+
+              </div>
+              <!-- related product end -->
+            </div>
+          </div>
+             
+            </div>
+            
+          </div>
+
+
+    </div>
+    
+  </section>
+
+
+
+</main>
