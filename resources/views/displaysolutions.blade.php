@@ -263,7 +263,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">Home</li>
                             <li class="breadcrumb-item">Display Solution</li>
-                            <li class="breadcrumb-item">{{ $parentBredcrumName->title }}</li>
+                            <li class="breadcrumb-item">{{ $parentBredcrumName }}</li>
                             <li class="breadcrumb-item active" aria-current="page">{{ $displaysolutions->title }}</li>
                         </ol>
                     </nav>
@@ -698,20 +698,20 @@
             $.ajax({
                 url: '{{ route('get-industries-for-products') }}',
                 method: 'POST',
+              
                 data: {
                     product_ids: product,
                     _token: '{{ csrf_token() }}' // Ensure CSRF token is included
                 },
                 success: function(response) {
-
                     var industries = response.industries;
                     // console.log(industries)
                     var industryFilters = $('#inner-box1');
 
-
                     industryFilters.find('input.industry-filter:checked').each(function() {
                         selectedIndustries.push($(this).data('industry-id'));
                     });
+                    
                     // Clear existing filters
                     industryFilters.empty();
 
@@ -720,7 +720,6 @@
                     industries.forEach(function(industry) {
                         var isChecked = selectedIndustries.includes(industry.id) ?
                             'checked' : '';
-
                         filters += '<div class="filter-option">' +
                             '<label class="tick">' +
                             industry.title +
@@ -730,7 +729,7 @@
                             '</label>' +
                             '</div>'
                     });
-                    //  console.log(filters)
+                  
                     industryFilters.append(filters)
                 },
                 error: function(xhr) {
@@ -742,7 +741,7 @@
         function displayProducts(products) {
             var productHtml = '';
             products.forEach(function(data) {
-                const wordLimit = 15;
+                const wordLimit = 9;
 
                 // Split the short description into words
                 const words = (data.short_description ?? '').split(' ');
@@ -879,7 +878,7 @@
                 'images/computerbanner.jpg';
 
             // Limit of words to show by default
-            const wordLimit = 15;
+            const wordLimit = 9;
 
             // Split the short description into words
             const words = (data.short_description ?? '').split(' ');
@@ -891,33 +890,33 @@
 
             // Create the product HTML with Read More functionality for short description
             var productHtml = `
-        <div class="col-md-6 col-lg-4 col-xl-4 all iPRO1 select-box">
-            <div class="product mb-3">
-                <div class="product_img">
-                    <a href="{{ url('product/${data.slug}') }}">
-                        <figure>
-                            <img src="{{ asset('${featuredImage}') }}" alt="product img">
-                        </figure>
-                    </a>
-                </div>
-                <div class="product_details">
-                    <div class="product_code">${data.model}</div>
-                    <div class="product_name">
-                        <h4>${data.title}</h4>
+                <div class="col-md-6 col-lg-4 col-xl-4 all iPRO1 select-box">
+                    <div class="product mb-3">
+                        <div class="product_img">
+                            <a href="{{ url('product/${data.slug}') }}">
+                                <figure>
+                                    <img src="{{ asset('${featuredImage}') }}" alt="product img">
+                                </figure>
+                            </a>
+                        </div>
+                        <div class="product_details">
+                            <div class="product_code">${data.model}</div>
+                            <div class="product_name">
+                                <h4>${data.title}</h4>
+                            </div>
+                            <div class="product_des">
+                                <p>
+                                    <span class="short-description">${shortDesc}</span>
+                                    ${showMoreNeeded ? `<span class="dots">...</span>` : ''}
+                                    <span class="full-description" style="display:none;">${fullDesc}</span>
+                                    ${showMoreNeeded ? `<span onclick="toggleReadMore(this)" class="readMoreLink" style="color: blue; cursor: pointer;"> Show More</span>` : ''}
+                                </p>
+                            </div>
+                            <a href="{{ url('product/${data.slug}') }}" class="inquire-now-btn">VIEW DETAILS</a>
+                        </div>
                     </div>
-                    <div class="product_des">
-                        <p>
-                            <span class="short-description">${shortDesc}</span>
-                            ${showMoreNeeded ? `<span class="dots">...</span>` : ''}
-                            <span class="full-description" style="display:none;">${fullDesc}</span>
-                            ${showMoreNeeded ? `<span onclick="toggleReadMore(this)" class="readMoreLink" style="color: blue; cursor: pointer;"> Show More</span>` : ''}
-                        </p>
-                    </div>
-                    <a href="{{ url('product/${data.slug}') }}" class="inquire-now-btn">VIEW DETAILS</a>
                 </div>
-            </div>
-        </div>
-    `;
+            `;
 
             // Append productHtml to productsContainer
             $('#productsContainer1').append(productHtml);

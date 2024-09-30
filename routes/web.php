@@ -40,7 +40,10 @@ Route::get('/industry/{slug}','HomeController@industryDetail')->name('industry')
 //aboutus Routes
 Route::get('/aboutus','HomeController@aboutus')->name('aboutus');
 //displaysolutions Routes
-Route::get('/displaysolutions/{slug}','HomeController@displaysolutions')->name('displaysolutions');
+Route::get('/displaysolutions/{slug}', 'HomeController@displaysolutions')->name('mainmenu');
+Route::get('/displaysolutions/{slug}/{parentSlug?}', 'HomeController@displaysolutions')->name('displaysolutions');
+
+
 //casestudy Routes
 Route::get('/case-study', 'HomeController@casestudy')->name('case-study');
 //casestudydetails Routes

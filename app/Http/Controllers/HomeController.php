@@ -206,11 +206,11 @@ class HomeController extends Controller
         $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
         $data['productBlog'] = ProductBlog::orderBy('id', 'DESC')->where('product_id', $product->id)->get();
         $data['productVariant'] = ProductVariant::where('product_id', $product->id)
-        ->join('variant_list', 'product_variant.variant', '=', 'variant_list.id')
-        ->orderByRaw('CAST(variant_list.name AS UNSIGNED) ASC') // Sort by numeric value of `name`
-        ->orderBy('product_variant.id', 'DESC') // Secondary sort by `id`
-        ->select('product_variant.*') // Ensure only product_variant fields are selected
-        ->get();
+            ->join('variant_list', 'product_variant.variant', '=', 'variant_list.id')
+            ->orderByRaw('CAST(variant_list.name AS UNSIGNED) ASC') // Sort by numeric value of `name`
+            ->orderBy('product_variant.id', 'DESC') // Secondary sort by `id`
+            ->select('product_variant.*') // Ensure only product_variant fields are selected
+            ->get();
         //ProductVariant::orderBy('id', 'DESC')->where('product_id', $product->id)->get();
         $data['productSpecification'] = ProductSpecifications::orderBy('id', 'DESC')->where('product_id', $product->id)->where('type', 'specification')->get();
         $productComponents = ProductComponent::orderBy('id', 'ASC')
@@ -287,17 +287,16 @@ class HomeController extends Controller
         $data['settings_youtube'] = $this->settings_youtube;
         return view('aboutus', $data);
     }
-    public function displaysolutions(Request $request, $slug)
+    public function displaysolutions($slug, $parentSlug = null)
     {
         $data['menus'] = isset($this->menus) ? $this->menus : '';
-
         $displaysolutions = DisplaySolution::where('slug', $slug)->first();
         // echo "<pre>";print_r($displaysolutions);die;
         $data['displaysolutions'] = $displaysolutions;
         $data['solutions'] = DisplaySolution::orderBy('id', 'ASC')->get();
         $data['solutionDetail'] = SolutionDetail::orderBy('id', 'ASC')->where('display_solution_id', $displaysolutions->id)->get();
-        $menuData = Menu::where('page', $displaysolutions->id)->first();
-        $data['parentBredcrumName'] = Menu::where('id', $menuData['parent'])->first();
+        //$menuData = Menu::where('page', $displaysolutions->id)->first();
+        $data['parentBredcrumName'] = DisplaySolution::where('slug', $parentSlug)->value('title');;
         $data['industries'] = Industries::paginate(10); // Adjust per page as needed
         $sliders = DisplaySolution::where('slug', $slug)->first()->banner_section;
         $data['sliders'] = json_decode($sliders);
@@ -319,7 +318,7 @@ class HomeController extends Controller
             ->get();
         $data['getAllSolutions'] = Menu::select('menu.id', 'menu.title')
             ->whereIn('parent', [$getMenuId])
-            ->join('display_solution', 'menu.id', '=', 'display_solution.menu_id')
+            ->join('display_solution', 'menu.page', '=', 'display_solution.id')
             ->distinct()
             ->orderBy('display_solution.order_display', 'ASC')
             ->get();
@@ -336,20 +335,19 @@ class HomeController extends Controller
         return view('displaysolutions', $data);
     }
 
-    public function getIndustriesForProducts(Request $request){
-      
+    public function getIndustriesForProducts(Request $request)
+    {
         $request->validate([
             'product_ids' => 'required|array',
             'product_ids.*' => 'integer|exists:products,id'
         ]);
         $productIds = $request->input('product_ids');
         // dd($productIds);
-        $industries = Industries::whereIn('id', function($query) use ($productIds) {
+        $industries = Industries::whereIn('id', function ($query) use ($productIds) {
             $query->select('industry_id')
-                  ->from('product_industry_map')
-                  ->whereIn('product_id', $productIds);
+                ->from('product_industry_map')
+                ->whereIn('product_id', $productIds);
         })->get();
-    
         return response()->json([
             'industries' => $industries
         ]);
@@ -579,7 +577,7 @@ class HomeController extends Controller
         $productKeyFeatureDescription = ProductKeyFeatureDescription::where('product_id', $productId)->where('variant_id', $variantId)->get();
         //$productKeyFeatureDescription = Product::select('key_features')->where('id',$productId)->first();
 
-        $data['productKeyFeatureDescription'] =$productKeyFeatureDescription ?? 0;
+        $data['productKeyFeatureDescription'] = $productKeyFeatureDescription ?? 0;
         $productKeyFeature = ProductBlog::where('product_id', $productId)->where('variant_id', $variantId)->get();
         $data['productKeyFeature'] = $productKeyFeature ?? 0;
         // Return the fetched data as a JSON response
@@ -605,49 +603,93 @@ class HomeController extends Controller
     }
     public function getProductList(Request $request)
     {
-        $query = Product::query();
 
+        $query = Product::query();
         // Filter products based on selected industries
         if ($request->filled('industries')) {
             $industries = $request->input('industries');
             $productIds = ProductIndustryMap::whereIn('industry_id', $industries)->pluck('product_id');
             $query->whereIn('id', $productIds);
         }
-
         // Handle solutionTitle if present
         if ($request->filled('solutionTitle')) {
             $solutionTitle = $request->input('solutionTitle');
 
             // Fetch menu IDs in one query
             $menuIds = DB::table('menu')->where('slug', 'LIKE', $solutionTitle)->value('id');
+
             if (!empty($menuIds)) {
                 // Fetch related solutions in one query with the required order
                 $relatedSolutions = DB::table('menu')
                     ->select('menu.id')
-                    ->join('display_solution', 'menu.id', '=', 'display_solution.menu_id')
+                    ->join('display_solution', 'menu.page', '=', 'display_solution.id')
                     ->where('menu.parent', $menuIds)
                     ->orderBy('display_solution.order_display', 'ASC')
-                    ->pluck('menu.id');
+                    ->pluck('menu.id'); // Returns a collection
+
+                // Check for specific values and modify if necessary
                 if ($relatedSolutions->isNotEmpty()) {
-                    $query->whereIn('series', $relatedSolutions);
+                    $relatedSolutionsArray = $relatedSolutions->toArray();
+
+                    // Find the index of 43 and 45
+                    $index43 = array_search(43, $relatedSolutionsArray);
+                    $index45 = array_search(45, $relatedSolutionsArray);
+
+                    // Check if both 43 and 45 are found in the array
+                    if ($index43 !== false && $index45 !== false) {
+                        // Modify the values at the found indexes
+                        $relatedSolutionsArray[$index43] = 42;
+                        $relatedSolutionsArray[$index45] = 44;
+
+                        // Remove 43 and 45 from the collection (if needed)
+                        $relatedSolutionsArray = array_filter($relatedSolutionsArray, function ($value) {
+                            return !in_array($value, [43, 45]);
+                        });
+
+                        // Convert the array back to a collection
+                        $relatedSolutions = collect($relatedSolutionsArray);
+
+                        // Add new values to the collection
+                        $relatedSolutions->push(42); // Add new value
+                        $relatedSolutions->push(44); // Add another new value
+                    }
+
+                    // Apply the modified collection to the query
+                    $query->whereIn('series', $relatedSolutions->toArray()); // Convert to array for whereIn
+
                 }
             }
         }
 
+
         if ($request->filled('series')) {
             $series = $request->input('series');
-           
+
+            // Search for 30 and replace it with 25
             $key = array_search(30, $series);
-                if ($key !== false) {
-                    $series[$key] = 25;
-                }
-                $key1 = array_search(31, $series);
-                if ($key !== false) {
-                    $series[$key1] = 27;
-                }    
-               
+            if ($key !== false) {
+                $series[$key] = 25;
+            }
+
+            // Search for 31 and replace it with 27
+            $key1 = array_search(31, $series);
+            if ($key1 !== false) {
+                $series[$key1] = 27;
+            }
+            $key3 = array_search(43, $series);
+            // Search for 43 (no replacement, just check)
+            if ($key3 !== false) {
+                $series[$key3] = 42;
+            }
+            $key4 = array_search(45, $series);
+            // Search for 43 (no replacement, just check)
+            if ($key4 !== false) {
+                $series[$key4] = 44;
+            }
+            // Apply the whereIn clause with modified series array
             $query->whereIn('series', $series);
         }
+
 
         // Paginate and return products
         $products = $query->orderBy('created_at', 'desc')->paginate(10);
