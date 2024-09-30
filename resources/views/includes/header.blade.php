@@ -66,60 +66,60 @@
                                                 <a href="javascript:void(0)"
                                                     class="dropdown-item drop_togl_inr">{{ $menu->title }}</a>
 
-                                                    <ul class="dropdown-menu sub_menu" style="display: none;">
-                                                        @foreach ($menu->children as $child)
-                                                            @if ($child->slug !== 'outdoor-active-led-video-walls')
-                                                                @if ($child->children->isNotEmpty())
-                                                                    <li class="has_child">
-                                                                        @if (!empty($child->page) && $child->page != null && $child->page != 0)
-                                                                            <a class="dropdown-item drop_togl_inr {{ request()->url() == route('mainmenu', ['slug' => $child->slug]) ? 'active' : '' }}"
-                                                                                href="{{ $menu->slug ? route('mainmenu', ['slug' => $child->slug]) : route('mainmenu', ['slug' => $child->slug]) }}">
-                                                                                {{ $child->title }}
-                                                                            </a>
-                                                                            <span class=""></span>
-                                                                        @else
-                                                                            <a href="javascript:void(0)"
-                                                                                class="dropdown-item drop_togl_inr">{{ $child->title }}</a>
-                                                                        @endif
-                                                                        <ul class="sub_menu third_level_menu"
-                                                                            style="display: none;">
-                                                                            @foreach ($child->children as $subChild)
-                                                                                @if (!empty($subChild->page) && $subChild->page != null && $subChild->page != 0)
-                                                                                    <li class="menu-text-case">
-                                                                                        <a id="{{ $subChild->slug }}"
-                                                                                            class="dropdown-item {{ request()->url() == route('displaysolutions', ['parentSlug' => $child->slug ?: null, 'slug' => $subChild->slug]) ? 'active' : '' }}"
-                                                                                            href="{{ $child->slug ? route('displaysolutions', ['parentSlug' => $child->slug, 'slug' => $subChild->slug]) : route('displaysolutions', ['slug' => $subChild->slug]) }}">
-                                                                                            {{ $subChild->title }}
-                                                                                        </a>
-                                                                                    </li>
-                                                                                @else
-                                                                                    <li class="menu-text-case">
-                                                                                        <a href="javascript:void(0)"
-                                                                                            class="dropdown-item">{{ $subChild->title }}</a>
-                                                                                        <span class="drop_togl_inr"></span>
-                                                                                    </li>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </ul>
+                                                <ul class="dropdown-menu sub_menu" style="display: none;">
+                                                    @foreach ($menu->children as $child)
+                                                        @if ($child->slug !== 'outdoor-active-led-video-walls')
+                                                            @if ($child->children->isNotEmpty())
+                                                                <li class="has_child">
+                                                                    @if (!empty($child->page) && $child->page != null && $child->page != 0)
+                                                                        <a class="dropdown-item drop_togl_inr {{ request()->url() == route('mainmenu', ['slug' => $child->slug]) ? 'active' : '' }}"
+                                                                            href="{{ $menu->slug ? route('mainmenu', ['slug' => $child->slug]) : route('mainmenu', ['slug' => $child->slug]) }}">
+                                                                            {{ $child->title }}
+                                                                        </a>
+                                                                        <span class=""></span>
+                                                                    @else
+                                                                        <a href="javascript:void(0)"
+                                                                            class="dropdown-item drop_togl_inr">{{ $child->title }}</a>
+                                                                    @endif
+                                                                    <ul class="sub_menu third_level_menu"
+                                                                        style="display: none;">
+                                                                        @foreach ($child->children as $subChild)
+                                                                            @if (!empty($subChild->page) && $subChild->page != null && $subChild->page != 0)
+                                                                                <li class="menu-text-case">
+                                                                                    <a id="{{ $subChild->slug }}"
+                                                                                        class="dropdown-item {{ request()->url() == route('displaysolutions', ['parentSlug' => $child->slug ?: null, 'slug' => $subChild->slug]) ? 'active' : '' }}"
+                                                                                        href="{{ $child->slug ? route('displaysolutions', ['parentSlug' => $child->slug, 'slug' => $subChild->slug]) : route('displaysolutions', ['slug' => $subChild->slug]) }}">
+                                                                                        {{ $subChild->title }}
+                                                                                    </a>
+                                                                                </li>
+                                                                            @else
+                                                                                <li class="menu-text-case">
+                                                                                    <a href="javascript:void(0)"
+                                                                                        class="dropdown-item">{{ $subChild->title }}</a>
+                                                                                    <span class="drop_togl_inr"></span>
+                                                                                </li>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </li>
+                                                            @else
+                                                                @if (!empty($child->page) && $child->page != null && $child->page != 0)
+                                                                    <li class="menu-text-case">
+                                                                        <a class="dropdown-item menu-text-case {{ request()->url() == route('mainmenu', ['slug' => $child->slug]) ? 'active' : '' }}"
+                                                                            href="{{ $menu->slug ? route('mainmenu', ['slug' => $child->slug]) : route('mainmenu', ['slug' => $child->slug]) }}">
+                                                                            {{ $child->title }}
+                                                                        </a>
                                                                     </li>
                                                                 @else
-                                                                    @if (!empty($child->page) && $child->page != null && $child->page != 0)
-                                                                        <li class="menu-text-case">
-                                                                            <a class="dropdown-item menu-text-case {{ request()->url() == route('mainmenu', ['slug' => $child->slug]) ? 'active' : '' }}"
-                                                                                href="{{ $menu->slug ? route('mainmenu', ['slug' => $child->slug]) : route('mainmenu', ['slug' => $child->slug]) }}">
-                                                                                {{ $child->title }}
-                                                                            </a>
-                                                                        </li>
-                                                                    @else
-                                                                        <li class="menu-text-case">
-                                                                            <a href="javascript:void(0)"
-                                                                                class="dropdown-item menu-text-case">{{ $child->title }}</a>
-                                                                        </li>
-                                                                    @endif
+                                                                    <li class="menu-text-case">
+                                                                        <a href="javascript:void(0)"
+                                                                            class="dropdown-item menu-text-case">{{ $child->title }}</a>
+                                                                    </li>
                                                                 @endif
                                                             @endif
-                                                        @endforeach
-                                                    </ul>
+                                                        @endif
+                                                    @endforeach
+                                                </ul>
                                             </li>
                                         @else
                                             <li class="nav-item has_child menu-text-case">

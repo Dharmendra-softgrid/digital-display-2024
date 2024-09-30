@@ -287,7 +287,54 @@ class HomeController extends Controller
         $data['settings_youtube'] = $this->settings_youtube;
         return view('aboutus', $data);
     }
-    public function displaysolutions($slug, $parentSlug = null)
+    public function displaysolutions($slug)
+    {
+        $data['menus'] = isset($this->menus) ? $this->menus : '';
+        $displaysolutions = DisplaySolution::where('slug', $slug)->first();
+        // echo "<pre>";print_r($displaysolutions);die;
+        $data['displaysolutions'] = $displaysolutions;
+        $data['solutions'] = DisplaySolution::orderBy('id', 'ASC')->get();
+        $data['solutionDetail'] = SolutionDetail::orderBy('id', 'ASC')->where('display_solution_id', $displaysolutions->id)->get();
+        //$menuData = Menu::where('page', $displaysolutions->id)->first();
+        $data['parentBredcrumName'] = DisplaySolution::where('slug', $slug)->value('title');;
+        $data['industries'] = Industries::paginate(10); // Adjust per page as needed
+        $sliders = DisplaySolution::where('slug', $slug)->first()->banner_section;
+        $data['sliders'] = json_decode($sliders);
+        $data['pfd'] = isset($this->profDisplaySolution) ? $this->profDisplaySolution : '';
+        $data['products'] = Product::inRandomOrder()->paginate(10);
+        $data['totalProducts'] = $data['products']->total();
+        // Get the total count
+        $data['totalProductCount'] = Product::count();
+        $data['signageotherbanner'] = Content::orderBy('id', 'DESC')->where('page', 'Signage Enterprise')->first();
+        $data['slug'] = $slug;
+        //$data['products'] = new \Illuminate\Pagination\LengthAwarePaginator($data['product'], count($data['product']), 15);
+        $data['homeDisplaySolution'] = DisplaySolution::orderBy('sort_order', 'ASC')->where('display_at_homepage', '1')->paginate(15);
+        $getMenuId = DisplaySolution::where('id', $displaysolutions->id)->value('menu_id');
+        $data['getRelatedSolutions'] = Menu::where('parent', [$getMenuId])
+            ->join('display_solution', 'menu.page', '=', 'display_solution.id')
+            ->where('display_solution.at_solutions', '=', 1)
+            ->distinct()
+            ->orderBy('display_solution.order_display', 'ASC')
+            ->get();
+        $data['getAllSolutions'] = Menu::select('menu.id', 'menu.title')
+            ->whereIn('parent', [$getMenuId])
+            ->join('display_solution', 'menu.page', '=', 'display_solution.id')
+            ->distinct()
+            ->orderBy('display_solution.order_display', 'ASC')
+            ->get();
+        $grid_section = DisplaySolution::where('slug', $slug)->first()->grid_section;
+        $data['grid_section'] = json_decode($grid_section);
+        $data['settings_email'] = $this->settings_email;
+        $data['settings_mobile'] = $this->settings_mobile;
+        $data['settings_address'] = $this->settings_address;
+        $data['settings_facebook'] = $this->settings_facebook;
+        $data['settings_instagram'] = $this->settings_instagram;
+        $data['settings_linkedin'] = $this->settings_linkedin;
+        $data['settings_twitter'] = $this->settings_twitter;
+        $data['settings_youtube'] = $this->settings_youtube;
+        return view('displaysolutions', $data);
+    }
+    public function displaysolutions2($parentSlug,$slug)
     {
         $data['menus'] = isset($this->menus) ? $this->menus : '';
         $displaysolutions = DisplaySolution::where('slug', $slug)->first();

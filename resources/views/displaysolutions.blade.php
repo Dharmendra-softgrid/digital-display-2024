@@ -436,7 +436,7 @@
                                                     <h3>{{ $value->title }}</h3>
                                                     {{-- Example commented out code --}}
                                                     {{-- <p>{{ $getContent }}</p> --}}
-                                                    <a href="{{ route('displaysolutions', ['slug' => $value->slug]) }}"
+                                                    <a href="{{ route('displaysolutions', ['parentSlug' => $displaysolutions->slug, 'slug' => $value->slug]) }}"
                                                         class="btn View-all-btn common-btn">View All <span
                                                             class="fas fa-arrow-right"></span></a>
                                                 </div>
@@ -462,16 +462,16 @@
                                                     {{-- <p>{{ $getContent }}</p> --}}
                                                     @if ($value->slug == 'esigncard')
                                                         @php  $value->slug='esigncard' @endphp
-                                                        <a href="{{ route('displaysolutions', ['slug' => $value->slug]) }}"
+                                                        <a href="{{ route('displaysolutions', ['parentSlug' => $displaysolutions->slug, 'slug' => $value->slug]) }}"
                                                             class="btn View-all-btn common-btn">View All <span
                                                                 class="fas fa-arrow-right"></span></a>
                                                     @elseif($value->slug == 'roombook')
                                                         @php  $value->slug='roombook' @endphp
-                                                        <a href="{{ route('displaysolutions', ['slug' => $value->slug]) }}"
+                                                        <a href="{{ route('displaysolutions', ['parentSlug' => $displaysolutions->slug, 'slug' => $value->slug]) }}"
                                                             class="btn View-all-btn common-btn">View All <span
                                                                 class="fas fa-arrow-right"></span></a>
                                                     @else
-                                                        <a href="{{ route('displaysolutions', ['slug' => $value->slug]) }}"
+                                                        <a href="{{ route('displaysolutions', ['parentSlug' => $displaysolutions->slug, 'slug' => $value->slug]) }}"
                                                             class="btn View-all-btn common-btn">View All <span
                                                                 class="fas fa-arrow-right"></span></a>
                                                     @endif
