@@ -126,8 +126,12 @@ class HomeController extends Controller
         //var_dump($slug);
         //$data['successstories'] = SuccessStories::orderBy('id', 'DESC')->paginate(15);
         $data['successstory'] = SuccessStories::where('slug', $slug)->first();
+        if (!$data['successstory']) {
+            abort(404);
+        }
         //dd([$data['successstory']->toSql(),$data['successstory']->getBindings()]);
         $sliders = SuccessStories::where('slug', $slug)->first()->banner_section;
+        
         $data['sliders'] = json_decode($sliders);
         $data['industries'] = isset($this->industries) ? $this->industries : '';
         $data['displaysolutions'] = DisplaySolution::orderBy('id', 'DESC')->paginate(15);
@@ -171,6 +175,9 @@ class HomeController extends Controller
         $data['newsrooms'] = Newsroom::inRandomOrder()->take(3)->get();
         $data['newsrooms'] = new \Illuminate\Pagination\LengthAwarePaginator($data['newsrooms'], count($data['newsrooms']), 15);
         $newsroom = Newsroom::where('slug', $slug)->first();
+        if (!$newsroom) {
+            abort(404);
+        }
         $data['newsroom'] = isset($newsroom) ? $newsroom : '';
         // get previous user id
         $data['previous'] = Newsroom::where('id', '<', $newsroom->id)->orderBy('id', 'desc')->first();
@@ -197,6 +204,9 @@ class HomeController extends Controller
     {
         $data['menus'] = isset($this->menus) ? $this->menus : '';
         $product = Product::where('slug', $slug)->first();
+        if (!$product) {
+            abort(404);
+        }
         $data['product'] = isset($product) ? $product : '';
         $data['productImages'] = ProductImages::orderBy('id', 'DESC')->where('product_id', $product->id)->get();
         $data['productBrochures'] = ProductSpecifications::where('title', 'brochures')->where('product_id', $product->id)->get();
@@ -237,6 +247,9 @@ class HomeController extends Controller
     {
         $data['menus'] = isset($this->menus) ? $this->menus : '';
         $industry = Industries::where('slug', $slug)->first();
+        if (!$industry) {
+            abort(404);
+        }
         $data['industry'] = isset($industry) ? $industry : '';
         $sliders = Industries::where('slug', $slug)->first()->banner_section;
         $data['sliders'] = json_decode($sliders);
@@ -287,10 +300,15 @@ class HomeController extends Controller
         $data['settings_youtube'] = $this->settings_youtube;
         return view('aboutus', $data);
     }
+    // used for main menu to route
     public function displaysolutions($slug)
     {
         $data['menus'] = isset($this->menus) ? $this->menus : '';
         $displaysolutions = DisplaySolution::where('slug', $slug)->first();
+        // If the display solution is not found, show a 404 page
+        if (!$displaysolutions) {
+            abort(404);
+        }
         // echo "<pre>";print_r($displaysolutions);die;
         $data['displaysolutions'] = $displaysolutions;
         $data['solutions'] = DisplaySolution::orderBy('id', 'ASC')->get();
@@ -334,10 +352,14 @@ class HomeController extends Controller
         $data['settings_youtube'] = $this->settings_youtube;
         return view('displaysolutions', $data);
     }
-    public function displaysolutions2($parentSlug,$slug)
+    // used for child menu to route, parentSlug is used here for child menu to get it's parent menu slug
+    public function displaysolutions2($parentSlug, $slug)
     {
         $data['menus'] = isset($this->menus) ? $this->menus : '';
         $displaysolutions = DisplaySolution::where('slug', $slug)->first();
+        if (!$displaysolutions) {
+            abort(404);
+        }
         // echo "<pre>";print_r($displaysolutions);die;
         $data['displaysolutions'] = $displaysolutions;
         $data['solutions'] = DisplaySolution::orderBy('id', 'ASC')->get();
@@ -425,6 +447,9 @@ class HomeController extends Controller
         $data['slider'] = Slider::orderBy('id', 'DESC')->where('type', 'CASESTUDYDETAILS')->first();
         $data['casestudies'] = Casestudy::orderBy('id', 'DESC')->paginate(15);
         $data['casestudiesdetails'] = Casestudy::where('slug', $slug)->first();
+        if (!$data['casestudiesdetails']) {
+            abort(404);
+        }
         $data['product'] = Product::inRandomOrder()->take(4)->get();
         $data['products'] = new \Illuminate\Pagination\LengthAwarePaginator($data['product'], count($data['product']), 15);
         $data['pfd'] = isset($this->profDisplaySolution) ? $this->profDisplaySolution : '';
