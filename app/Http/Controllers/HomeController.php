@@ -365,7 +365,7 @@ class HomeController extends Controller
         $data['solutions'] = DisplaySolution::orderBy('id', 'ASC')->get();
         $data['solutionDetail'] = SolutionDetail::orderBy('id', 'ASC')->where('display_solution_id', $displaysolutions->id)->get();
         //$menuData = Menu::where('page', $displaysolutions->id)->first();
-        $data['parentBredcrumName'] = DisplaySolution::where('slug', $parentSlug)->value('title');;
+        $data['parentBredcrumName'] = DisplaySolution::where('slug', $parentSlug)->value('title');
         $data['industries'] = Industries::paginate(10); // Adjust per page as needed
         $sliders = DisplaySolution::where('slug', $slug)->first()->banner_section;
         $data['sliders'] = json_decode($sliders);
@@ -675,7 +675,6 @@ class HomeController extends Controller
     }
     public function getProductList(Request $request)
     {
-
         $query = Product::query();
         // Filter products based on selected industries
         if ($request->filled('industries')) {

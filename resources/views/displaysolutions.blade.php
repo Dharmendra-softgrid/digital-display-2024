@@ -174,7 +174,7 @@
                                                             style="margin-left: 5px;"></i>
                                                     </a>
                                                 @else
-                                                    <a href="{{ route('displaysolutions', ['slug' => $vl->slug]) }}"
+                                                    <a href="{{ route('mainmenu', ['slug' => $vl->slug]) }}"
                                                         class="link">
                                                         Know More
                                                         <!-- <span class="arrow-right"><img src="{{ asset('/') }}images/Icon-arrow-right.svg"></span> -->
