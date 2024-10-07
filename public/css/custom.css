@@ -3905,3 +3905,14 @@ section.top-inner-banner {
   object-fit: contain;
   object-position: center;
 }
+.footer-x-icon {
+  width: 14px; /* Maintain the specified width */
+  height: 14px; /* Maintain the specified height */
+  transition: filter 0.3s ease; /* Smooth transition */
+  margin: 7px 0px 13px 0px;
+}
+
+.footer-x-icon:hover {
+  /* Adjust filter to create the desired hover color #eb1b10 */
+  filter: brightness(0) saturate(100%) invert(19%) sepia(100%) saturate(2480%) hue-rotate(0deg);
+}

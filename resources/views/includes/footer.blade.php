@@ -1,3 +1,5 @@
+
+
 <footer class="footer_sec">
     <div class="container">
         <div class="row">
@@ -15,9 +17,11 @@
                                     class="fab fa-instagram"></i></a>
                         </li>
                         <li>
-                            <a href="{{url($settings_twitter->svalue)}}" class="social_twitter link" target="_blank"><i style="margin-top: 6px"
-                                    class="fab fa-twitter"></i></a>
+                            <a href="{{ url($settings_twitter->svalue) }}" class="social_twitter link" target="_blank">
+                                <img src="{{ asset('/') }}icon/x-icon.png" alt="X Logo" class="footer-x-icon" style="width: 14px; height: 14px;" />
+                            </a>
                         </li>
+                          
                         <li>
                             <a href="{{url($settings_facebook->svalue)}}" class="social_fb link" target="_blank"><i style="margin-top: 6px"
                                     class="fab fa-facebook-f"></i></a>
