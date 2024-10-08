@@ -168,7 +168,7 @@
                                                 <div>{!! $vl->short_desc_home !!}</div>
                                             </div>
                                             <div class="know_more-link text-start btn-effect">
-                                                @if ($i == 7)
+                                                @if ($i == 6)
                                                     <a href="https://pro-av.panasonic.net/en/" class="link">
                                                         Know More <i class="fas fa-external-link-alt"
                                                             style="margin-left: 5px;"></i>
@@ -206,9 +206,10 @@
                                 </div>
 
                                 <div class="col">
-                                    <input type="text" required maxlength="50" class="form-control mobile"
-                                        id="first_name" name="phone" placeholder="Mobile No.*"
-                                        onkeypress="return validateMobileNumber(event)" maxlength="10" required>
+
+                                        <input type="text" class="form-control" id="phone" name="phone"
+                                    placeholder="Mobile No.*" maxlength="10" pattern="\d{10}"
+                                    title="Please enter a 10-digit phone number" required>
 
                                 </div>
 
@@ -986,20 +987,7 @@
         }
     });
 </script>
-<script>
-    function validateMobileNumber(event) {
-        // Get the current input value
-        let inputValue = event.target.value;
 
-        // Check if the entered key is a number and if the total length is less than or equal to 10
-        if (event.keyCode >= 48 && event.keyCode <= 57 && inputValue.length < 10) {
-            return true;
-        } else {
-            event.preventDefault(); // Prevent the character from being entered
-            return false;
-        }
-    }
-</script>
 <script>
     function toggleReadMore(link) {
         // Get the parent <p> element
@@ -1027,4 +1015,64 @@
             link.innerHTML = "Show Less";
         }
     }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('phone').addEventListener('input', function() {
+            let phoneInput = this.value;
+            console.log(phoneInput); // Log the current input value
+
+            // Remove any non-digit characters
+            phoneInput = phoneInput.replace(/\D/g, '');
+
+            // If no input, clear validity and return
+            if (phoneInput.length === 0) {
+                this.setCustomValidity(""); // Clear any custom validity message
+                this.value = ""; // Allow empty input
+                return;
+            }
+
+            // Restrict digits below 6
+            if (/^[1-5]/.test(phoneInput)) {
+                this.setCustomValidity("Phone number cannot start with 1, 2, 3, 4, or 5.");
+                this.reportValidity(); // Show validation message
+                this.value = ""; // Clear input if invalid
+                return;
+            }
+
+            // Check if the first digit is less than 6
+            if (phoneInput[0] < '6') {
+                this.setCustomValidity("Phone number must start with 6 or above.");
+                this.reportValidity(); // Show validation message
+                this.value = ""; // Clear input if invalid
+                return;
+            }
+
+            // Count the occurrences of each digit
+            const digitCount = {};
+            for (let digit of phoneInput) {
+                digitCount[digit] = (digitCount[digit] || 0) + 1;
+                // If any digit is repeated more than 8 times, remove the last character
+                if (digitCount[digit] > 8) {
+                    this.setCustomValidity("No digit should repeat more than 8 times.");
+                    this.reportValidity(); // Show validation message
+                    this.value = phoneInput.substring(0, phoneInput.length -
+                    1); // Remove the last character
+                    return;
+                }
+            }
+
+            // Check if the length is not equal to 10
+            if (phoneInput.length > 10) {
+                this.setCustomValidity("Please enter a valid 10-digit phone number.");
+                this.reportValidity(); // Show validation message
+                this.value = phoneInput.substring(0, 10); // Limit input to 10 digits
+            } else {
+                this.setCustomValidity(""); // Clear the custom validity message
+            }
+
+            // Update the input field's value
+            this.value = phoneInput.substring(0, 10); // Limit input to 10 digits
+        });
+    });
 </script>

@@ -129,7 +129,7 @@
                 </div>
             </div>
             <div class="col col-md-auto copyright_column">
-                <div class="copyright_text"> © All rights are reserved.</div>
+                <div class="copyright_text"> © 2024 - Panasonic Life Solutions India Pvt. Ltd. All rights reserved.</div>
             </div>
             <div class="col-auto">
                 <div class="ftr_right_menu">

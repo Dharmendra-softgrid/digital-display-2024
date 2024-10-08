@@ -59,6 +59,7 @@
 		<div class="row">
 			@if($homeDisplaySolution->isNotEmpty())
 				@foreach($homeDisplaySolution as $i=>$vl)
+				
 				<div class="col-6 col-lg-3 col-md-6 mb-5">
 					<div class="solution_item ">
 						<figure>
@@ -76,12 +77,12 @@
 									<!-- <span class="arrow-right"><img src="{{asset('/')}}images/Icon-arrow-right.svg"></span> -->
 								</a>
 								
-								@elseif($i == 7)
+								@elseif($i == 6)
 								<a href="https://pro-av.panasonic.net/en/" class="link">
 									Know More  <i class="fas fa-external-link-alt" style="margin-left: 5px;"></i>
 								</a>
 								@else
-								<a href="{{route('mainmenu', [ 'slug' => $vl->slug])}}" class="link">
+								<a href="{{route('mainmenu', [ 'slug' => $vl->slug])}}" class="link" >
 									Know More 
 									<!-- <span class="arrow-right"><img src="{{asset('/')}}images/Icon-arrow-right.svg"></span> -->
 								</a>
