@@ -18,7 +18,8 @@
         /* css added for zoom effect */
         .product-thumbnail-image {
             position: relative;
-            width: 100px; /* Original thumbnail size */
+            width: 100px;
+            /* Original thumbnail size */
             overflow: hidden;
             cursor: pointer;
         }
@@ -27,7 +28,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%; /* Match the width of the target div */
+            width: 100%;
+            /* Match the width of the target div */
             height: auto;
             z-index: 1000;
             transition: all 0.3s ease-in-out;
@@ -67,8 +69,8 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <!-- <div class="Products_img">
-                                                                                                                                                                   <img class="img-fluid" src="assets/images/product_img.png" alt="Products">
-                                                                                                                                                                </div> -->
+                                                                                                                                                                       <img class="img-fluid" src="assets/images/product_img.png" alt="Products">
+                                                                                                                                                                    </div> -->
 
                         <div class="product-vehicle-detail-banner banner-content clearfix">
                             <div class="product-banner-slider">
@@ -116,11 +118,11 @@
                                 {!! $product->description !!}
                             </div>
                             @if (!empty($productVariant->isNotEmpty()))
-                            <div class="choose_size">
-                                <h5>Choose Your Size</h5>
+                                <div class="choose_size">
+                                    <h5>Choose Your Size</h5>
 
-                                <div class="Size_button_block">
-                                   
+                                    <div class="Size_button_block">
+
                                         @foreach ($productVariant as $index => $item)
                                             <div class="radio_button">
                                                 <input class="default-checked" type="radio" id="{{ $item->variant }}"
@@ -135,14 +137,14 @@
                                                 </label>
                                             </div>
                                         @endforeach
-                                    
+
+
+                                    </div>
 
                                 </div>
-
-                            </div>
                             @endif
                             <div class="inquire-block mt-4">
-                                <a class="inquire-now-link" href="{{route('inquire-now')}}">ENQUIRE NOW</a>
+                                <a class="inquire-now-link" href="{{ route('inquire-now') }}">ENQUIRE NOW</a>
                             </div>
 
 
@@ -164,9 +166,15 @@
                         <button class="nav-link" id="nav-resources-tab" data-bs-toggle="tab" data-bs-target="#resources"
                             type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Download
                             brochures</button>
-                        <button class="nav-link" id="nav-RelatedProducts-tab" data-bs-toggle="tab"
-                            data-bs-target="#RelatedProducts" type="button" role="tab" aria-controls="nav-contact"
+                        @if (!empty($relatedProducts->isNotEmpty()))
+                            <button class="nav-link" id="nav-RelatedProducts-tab" data-bs-toggle="tab"
+                                data-bs-target="#RelatedProducts" type="button" role="tab" aria-controls="nav-contact"
+                                aria-selected="false">Related Products</button>
+                        @else
+                        <button class="nav-link" aria-controls="nav-contact"
                             aria-selected="false">Related Products</button>
+                        @endif
+
                     </div>
                 </nav>
 
@@ -478,7 +486,6 @@
         return html += `
               <ul>
                 <li>
-                    <h5>Manual files</h5>
                     <div class="brochure-block">
                         <div class="brochure-item">
                             <div class="brochure-thumbnail">
@@ -511,32 +518,32 @@
     //     thumb.addEventListener('mouseover', function() {
     //         thumb.style.zIndex = 10;
     //     });
-    
+
     //     thumb.addEventListener('mouseout', function() {
     //         thumb.style.zIndex = 1;
     //     });
     // });
 
     document.querySelectorAll('.product-thumbnail-image').forEach(function(thumb) {
-    thumb.addEventListener('mouseover', function() {
-        var targetDiv = document.querySelector('.slider-banner-image[data-slick-index="1"]');
-        var enlargedImage = thumb.querySelector('img').cloneNode(true);
+        thumb.addEventListener('mouseover', function() {
+            var targetDiv = document.querySelector('.slider-banner-image[data-slick-index="1"]');
+            var enlargedImage = thumb.querySelector('img').cloneNode(true);
 
-        // Add a special class for styling
-        enlargedImage.classList.add('enlarged-thumbnail');
+            // Add a special class for styling
+            enlargedImage.classList.add('enlarged-thumbnail');
 
-        // Append the enlarged image to the target div
-        targetDiv.appendChild(enlargedImage);
-        targetDiv.style.opacity = '1'; // Make sure the target div is visible
+            // Append the enlarged image to the target div
+            targetDiv.appendChild(enlargedImage);
+            targetDiv.style.opacity = '1'; // Make sure the target div is visible
+        });
+
+        thumb.addEventListener('mouseout', function() {
+            var targetDiv = document.querySelector('.slider-banner-image[data-slick-index="1"]');
+            var enlargedImage = targetDiv.querySelector('.enlarged-thumbnail');
+
+            if (enlargedImage) {
+                enlargedImage.remove();
+            }
+        });
     });
-
-    thumb.addEventListener('mouseout', function() {
-        var targetDiv = document.querySelector('.slider-banner-image[data-slick-index="1"]');
-        var enlargedImage = targetDiv.querySelector('.enlarged-thumbnail');
-
-        if (enlargedImage) {
-            enlargedImage.remove();
-        }
-    });
-});
-    </script>
+</script>
